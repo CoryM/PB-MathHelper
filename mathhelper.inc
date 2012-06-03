@@ -33,14 +33,6 @@ CLASS cMathHelper
     '=======================
     '  Complex Number Math
     '=======================
-    METHOD vComplexNumber(BYVAL IN r AS VARIANT,BYVAL IN i AS VARIANT) AS ComplexNumber
-      LOCAL z AS ComplexNumber
-      z.real = VARIANT#(r)
-      z.img = VARIANT#(i)
-      METHOD = z
-    END METHOD
-
-
     METHOD ComplexNumber(BYVAL IN r AS EXTENDED,BYVAL IN i AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = r
