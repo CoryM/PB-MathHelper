@@ -160,6 +160,59 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+    '===================================
+    '  Transforms functions
+    '===================================
+
+    METHOD DCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
+      LOCAL k AS LONG
+      LOCAL n AS LONG
+      LOCAL Sum AS EXTENDED
+      LOCAL ScaledPi AS EXTENDED
+      LOCAL ScaleOut AS EXTENDED
+
+      ScaleOut =  SQR(2 /(DCTSize+1))
+
+      FOR k = 0 TO DCTSize
+        sum = 0
+        ScaledPi = (me.pi * k) / (DCTSize + 1)
+        FOR n = 0 TO DCTSize
+          sum += @pDataIn[n] * COS(ScaledPi * (n + 0.5))
+        NEXT n
+        IF k=0 THEN
+          sum = sum * SQR( 1 /(DCTSize+1))
+        ELSE
+          sum = sum * ScaleOut
+        END IF
+        @pDataOut[k] = sum
+      NEXT k
+
+    END METHOD
+
+    METHOD IDCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
+      LOCAL k AS LONG
+      LOCAL n AS LONG
+      LOCAL Sum AS EXTENDED
+      LOCAL p AS EXTENDED
+      LOCAL ScaleOut AS EXTENDED
+      LOCAL ScaleOut0 AS EXTENDED
+      LOCAL ScaledPi AS EXTENDED
+
+      ScaleOut =  SQR(2 /(DCTSize+1))
+      ScaleOut0 =  (@pDataIn[0] * SQR(1 /(DCTSize+1))) / ScaleOut
+
+      FOR n = 0 TO DCTSize
+        sum = ScaleOut0
+        ScaledPi = (me.pi * (n + 0.5))  / (DCTSize + 1)
+        FOR k = 1 TO DCTSize
+          sum += @pDataIn[k] * COS(ScaledPi * k)
+        NEXT k
+        sum = sum * ScaleOut
+        @pDataOut[n] = ROUND(sum,14)
+      NEXT n
+
+    END METHOD
+
 
   END INTERFACE
 END CLASS
