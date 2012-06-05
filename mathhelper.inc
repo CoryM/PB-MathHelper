@@ -30,9 +30,12 @@ CLASS cMathHelper
       METHOD = Pi
     END METHOD
 
+
     '=======================
     '  Complex Number Math
     '=======================
+
+    'Helps set a complex number
     METHOD ComplexNumber(BYVAL IN r AS EXTENDED,BYVAL IN i AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = r
@@ -40,6 +43,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Helps set a Polar number
     METHOD PolarNumber(BYVAL IN radius AS EXTENDED, BYVAL IN radians AS EXTENDED) AS PolarNumber
       LOCAL p AS polarNumber
 
@@ -49,6 +53,7 @@ CLASS cMathHelper
       METHOD = p
     END METHOD
 
+    'Add two complex number together
     METHOD ComplexAddition(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = z1.real + z2.real
@@ -56,6 +61,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Get the Conjugate of a complex number
     METHOD ComplexConjugate(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = z1.real
@@ -63,6 +69,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Subtract two complex numbers together
     METHOD ComplexSubtraction(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = z1.real - z2.real
@@ -70,6 +77,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Multiply two complex numbers together
     METHOD ComplexMultiply(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = (z1.real * z2.real) - (z1.img * z2.img)
@@ -77,6 +85,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Divide complex numbers z1 by z2
     METHOD ComplexDivide(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       LOCAL d AS EXTENDED
@@ -87,6 +96,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Get the SquareRoot of a complex number
     METHOD ComplexSquareRoot(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
       LOCAL d AS EXTENDED
@@ -98,6 +108,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    'Raise a complex number in Polar form by a arbitrary power.
     METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS EXTENDED) AS PolarNumber
       LOCAL p AS PolarNumber
 
@@ -108,7 +119,7 @@ CLASS cMathHelper
       METHOD = p
     END METHOD
 
-
+    'Raise a complex number by a arbitrary power.
     METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
       LOCAL p AS PolarNumber
@@ -120,7 +131,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
-
+    'Convert a complex number into its polar form
     METHOD ComplexToPolar(BYVAL IN z AS ComplexNumber) AS PolarNumber
       LOCAL p AS polarNumber
 
@@ -130,6 +141,7 @@ CLASS cMathHelper
       METHOD = p
     END METHOD
 
+    'Convert a polar number into its complex form.
     METHOD PolarToComplex(BYVAL IN p AS PolarNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
 
@@ -139,7 +151,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
-
+    'Get the ArcTangent2 of x and y
     METHOD ATAN2(BYVAL IN x AS EXTENDED, BYVAL IN y AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
 
@@ -164,9 +176,12 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+
     '===================================
     '  Inverse Trigonometric functions
     '===================================
+
+    'The ArcSin function
     METHOD ArcSin(BYVAL IN a AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
 
@@ -175,6 +190,7 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+    'The ArcCos Function
     METHOD ArcCos(BYVAL IN a AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
 
@@ -183,10 +199,19 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+
     '===================================
     '  Transforms functions
     '===================================
 
+    'The discrete cosine transform.
+    '  pDataIn   A pointer to the source array of extended data type.
+    '  pDataOut  A pointer to the destination array of extended data type.
+    '  DCTSize   Size of the array that you want to transform including 0.
+    '
+    'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
+    'address of the array.  Example to transform source to destination using a
+    'DCT of 8 values use: DCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
     METHOD DCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
       LOCAL k AS LONG
       LOCAL n AS LONG
@@ -208,6 +233,14 @@ CLASS cMathHelper
 
     END METHOD
 
+    'The inverse discrete cosine transform.
+    '  pDataIn   A pointer to the source array of extended data type.
+    '  pDataOut  A pointer to the destination array of extended data type.
+    '  DCTSize   Size of the array that you want to transform including 0.
+    '
+    'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
+    'address of the array.  Example to transform source to destination using a
+    'DCT of 8 values use: IDCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
     METHOD IDCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
       LOCAL k AS LONG
       LOCAL n AS LONG
