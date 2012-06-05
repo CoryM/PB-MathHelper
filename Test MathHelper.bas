@@ -8,6 +8,9 @@
 
 #INCLUDE ONCE "mathhelper.inc"
 
+%False = 0
+%True = NOT %False
+
 FUNCTION PBMAIN () AS LONG
   LOCAL a AS ComplexNumber
   LOCAL b AS ComplexNumber
@@ -16,8 +19,13 @@ FUNCTION PBMAIN () AS LONG
   LOCAL f AS EXTENDED
   LOCAL p AS PolarNumber
   LOCAL q AS PolarNumber
+  LOCAL DataIn(), DataOut(), DataCheck() AS EXTENDED
 
   LOCAL TestString AS STRING
+
+  DIM DataIn(0 TO 7) AS EXTENDED
+  DIM DataOut(0 TO 7) AS EXTENDED
+  DIM DataCheck(0 TO 7) AS EXTENDED
 
   TestString = "Testing MathHelper Class setup" + $CRLF
 
@@ -223,6 +231,34 @@ FUNCTION PBMAIN () AS LONG
       TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
     END IF
 
+    TestString += "  Testing PolarPower : "
+    a = MathHelper.ComplexNumber(2, 3)
+    p = MathHelper.ComplexToPolar(a)
+    p = MathHelper.PolarPower(p, 4)
+    a = MathHelper.PolarToComplex(p)
+    a.real = ROUND(a.real, 15)
+    a.img = ROUND(a.img, 15)
+    b = MathHelper.ComplexNumber(-119, -120)
+    IF a = b THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
+    END IF
+
+    TestString += "  Testing ComplexPower : "
+    a = MathHelper.ComplexNumber(2, 3)
+    a = MathHelper.ComplexPower(a, 4)
+    a = MathHelper.PolarToComplex(p)
+    a.real = ROUND(a.real, 15)
+    a.img = ROUND(a.img, 15)
+    b = MathHelper.ComplexNumber(-119, -120)
+    IF a = b THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
+    END IF
+
+
     TestString += "  Testing ArcSin : "
     e = MathHelper.ArcSin(SIN(0.5))
     f = 0.5
@@ -241,10 +277,80 @@ FUNCTION PBMAIN () AS LONG
       TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
     END IF
 
+    TestString += "  Testing DCT : "
+    DataIn(0)=21
+    DataIn(1)=1
+    DataIn(2)=8
+    DataIn(3)=3
+    DataIn(4)=5
+    DataIn(5)=2
+    DataIn(6)=13
+    DataIn(7)=1
+    MathHelper.DCT(VARPTR(DataIn(0)), VARPTR(DataOut(0)), 7)
+    DataCheck(0)=19.0918830920367832
+    DataCheck(1)=6.29065550725971153
+    DataCheck(2)=7.23252359230918676
+    DataCheck(3)=7.09845244693213297
+    DataCheck(4)=2.12132034355964246
+    DataCheck(5)=11.1942153663612446
+    DataCheck(6)=.831024961533054953
+    DataCheck(7)=8.75951873558976203
+    IF CompareArray(DataOut(), DataCheck(), 7, 16) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED recieved  " + $CRLF + ArrayToString(DataOut(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(DataCheck(), 7, 4) + $CRLF
+    END IF
+
+    TestString += "  Testing IDCT : "
+    DataIn(0)=19.0918830920367832
+    DataIn(1)=6.29065550725971153
+    DataIn(2)=7.23252359230918676
+    DataIn(3)=7.09845244693213297
+    DataIn(4)=2.12132034355964246
+    DataIn(5)=11.1942153663612446
+    DataIn(6)=.831024961533054953
+    DataIn(7)=8.75951873558976203
+    MathHelper.IDCT(VARPTR(DataIn(0)), VARPTR(DataOut(0)), 7)
+    DataCheck(0)=21
+    DataCheck(1)=1
+    DataCheck(2)=8
+    DataCheck(3)=3
+    DataCheck(4)=5
+    DataCheck(5)=2
+    DataCheck(6)=13
+    DataCheck(7)=1
+    IF CompareArray(DataOut(), DataCheck(), 7, 16) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED recieved  " + $CRLF + ArrayToString(DataOut(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(DataCheck(), 7, 4) + $CRLF
+    END IF
 
   END IF
 
   'Show the results
   MSGBOX TestString
 
+END FUNCTION
+
+FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG) AS STRING
+  LOCAL i AS LONG
+  LOCAL StringOut AS STRING
+
+  FOR i = 0 TO SizeOfArray
+    StringOut += SPACE$(Indent) + STR$(DataIn(i), 18)' + $CRLF
+  NEXT i
+
+  FUNCTION = StringOut
+END FUNCTION
+
+FUNCTION CompareArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS LONG
+  LOCAL i AS LONG
+  LOCAL result AS LONG
+
+  result = %True
+  FOR i=0 TO l
+    IF ROUND(a(i), p) <> ROUND(b(i), p) THEN Result = %False: EXIT FOR
+  NEXT i
+
+  FUNCTION = result
 END FUNCTION
