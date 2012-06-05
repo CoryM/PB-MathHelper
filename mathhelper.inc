@@ -98,6 +98,29 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+    METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS EXTENDED) AS PolarNumber
+      LOCAL p AS PolarNumber
+
+      p = p1
+      p.radius = p.radius ^ Power
+      p.radians = p.radians * Power
+
+      METHOD = p
+    END METHOD
+
+
+    METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS EXTENDED) AS ComplexNumber
+      LOCAL z AS ComplexNumber
+      LOCAL p AS PolarNumber
+
+      p = me.ComplexToPolar(z1)
+      p = me.PolarPower(p, Power)
+      z = me.PolarToComplex(p)
+
+      METHOD = z
+    END METHOD
+
+
     METHOD ComplexToPolar(BYVAL IN z AS ComplexNumber) AS PolarNumber
       LOCAL p AS polarNumber
 
@@ -179,13 +202,9 @@ CLASS cMathHelper
         FOR n = 0 TO DCTSize
           sum += @pDataIn[n] * COS(ScaledPi * (n + 0.5))
         NEXT n
-        IF k=0 THEN
-          sum = sum * SQR( 1 /(DCTSize+1))
-        ELSE
-          sum = sum * ScaleOut
-        END IF
-        @pDataOut[k] = sum
+        @pDataOut[k] = sum * ScaleOut
       NEXT k
+      @pDataOut[0] = (@pDataOut[0] / ScaleOut) * SQR( 1 /(DCTSize+1))
 
     END METHOD
 
@@ -203,7 +222,7 @@ CLASS cMathHelper
 
       FOR n = 0 TO DCTSize
         sum = ScaleOut0
-        ScaledPi = (me.pi * (n + 0.5))  / (DCTSize + 1)
+        ScaledPi = (Pi * (n + 0.5))  / (DCTSize + 1)
         FOR k = 1 TO DCTSize
           sum += @pDataIn[k] * COS(ScaledPi * k)
         NEXT k

@@ -231,6 +231,34 @@ FUNCTION PBMAIN () AS LONG
       TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
     END IF
 
+    TestString += "  Testing PolarPower : "
+    a = MathHelper.ComplexNumber(2, 3)
+    p = MathHelper.ComplexToPolar(a)
+    p = MathHelper.PolarPower(p, 4)
+    a = MathHelper.PolarToComplex(p)
+    a.real = ROUND(a.real, 15)
+    a.img = ROUND(a.img, 15)
+    b = MathHelper.ComplexNumber(-119, -120)
+    IF a = b THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
+    END IF
+
+    TestString += "  Testing ComplexPower : "
+    a = MathHelper.ComplexNumber(2, 3)
+    a = MathHelper.ComplexPower(a, 4)
+    a = MathHelper.PolarToComplex(p)
+    a.real = ROUND(a.real, 15)
+    a.img = ROUND(a.img, 15)
+    b = MathHelper.ComplexNumber(-119, -120)
+    IF a = b THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
+    END IF
+
+
     TestString += "  Testing ArcSin : "
     e = MathHelper.ArcSin(SIN(0.5))
     f = 0.5
