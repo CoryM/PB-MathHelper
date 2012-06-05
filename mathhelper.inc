@@ -2,7 +2,7 @@
 ' http://creativecommons.org/licenses/by/3.0/ or send a letter to
 ' Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
-
+#INCLUDE THIS ONCE
 #REGISTER NONE  'Needed for bug in optimazation see: "http://www.powerbasic.com/support/pbforums/showthread.php?p=408285"
 
 TYPE ComplexNumber
