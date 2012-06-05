@@ -268,6 +268,43 @@ FUNCTION PBMAIN () AS LONG
       TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
     END IF
 
+    TestString += "  Testing SinH : "
+    e = MathHelper.SinH(0.5)
+    f = 0.521095305493747362
+    IF RoundCompare(e, f, 18) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+    TestString += "  Testing ArcSinH : "
+    e = MathHelper.ArcSinH(0.5)
+    f = 0.481211825059603448
+    IF RoundCompare(e, f, 18) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+    TestString += "  Testing CosH : "
+    e = MathHelper.CosH(0.5)
+    f = 1.04719755119659774
+    IF RoundCompare(e, f, 17) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+    TestString += "  Testing ArcCosH : "
+    e = MathHelper.ArcCosH(1.5)
+    f = 0.962423650119206895
+    IF RoundCompare(e, f, 18) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+
     TestString += "  Testing ArcCos : "
     e = ROUND(MathHelper.ArcCos(COS(0.5)),17)
     f = 0.5
@@ -351,6 +388,19 @@ FUNCTION CompareArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS
   FOR i=0 TO l
     IF ROUND(a(i), p) <> ROUND(b(i), p) THEN Result = %False: EXIT FOR
   NEXT i
+
+  FUNCTION = result
+END FUNCTION
+
+FUNCTION RoundCompare(a AS EXTENDED, b AS EXTENDED, p AS LONG) AS LONG
+  LOCAL result AS LONG
+
+  IF ROUND(a, p) = ROUND(b, p) THEN
+    Result = %True
+  ELSE
+    Result = %False
+  END IF
+
 
   FUNCTION = result
 END FUNCTION

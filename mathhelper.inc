@@ -18,13 +18,16 @@ END TYPE
 CLASS cMathHelper
   INSTANCE Pi AS EXTENDED
 
+
   CLASS METHOD CREATE()
     Pi = 3.14159265358979323846264
   END METHOD
 
+
   INTERFACE iMathHelper
 
     INHERIT IUNKNOWN
+
 
     METHOD Pi () AS EXTENDED
       METHOD = Pi
@@ -35,6 +38,7 @@ CLASS cMathHelper
     '  Complex Number Math
     '=======================
 
+
     'Helps set a complex number
     METHOD ComplexNumber(BYVAL IN r AS EXTENDED,BYVAL IN i AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
@@ -42,6 +46,7 @@ CLASS cMathHelper
       z.img = i
       METHOD = z
     END METHOD
+
 
     'Helps set a Polar number
     METHOD PolarNumber(BYVAL IN radius AS EXTENDED, BYVAL IN radians AS EXTENDED) AS PolarNumber
@@ -53,6 +58,7 @@ CLASS cMathHelper
       METHOD = p
     END METHOD
 
+
     'Add two complex number together
     METHOD ComplexAddition(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
@@ -60,6 +66,7 @@ CLASS cMathHelper
       z.img = z1.img + z2.img
       METHOD = z
     END METHOD
+
 
     'Get the Conjugate of a complex number
     METHOD ComplexConjugate(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
@@ -69,6 +76,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+
     'Subtract two complex numbers together
     METHOD ComplexSubtraction(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
@@ -77,6 +85,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+
     'Multiply two complex numbers together
     METHOD ComplexMultiply(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
@@ -84,6 +93,7 @@ CLASS cMathHelper
       z.img = (z1.real * z2.img) + (z2.real * z1.img)
       METHOD = z
     END METHOD
+
 
     'Divide complex numbers z1 by z2
     METHOD ComplexDivide(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
@@ -95,6 +105,7 @@ CLASS cMathHelper
       z.img =  ((z1.img  * z2.real) - (z1.real * z2.img)) / d
       METHOD = z
     END METHOD
+
 
     'Get the SquareRoot of a complex number
     METHOD ComplexSquareRoot(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
@@ -108,6 +119,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+
     'Raise a complex number in Polar form by a arbitrary power.
     METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS EXTENDED) AS PolarNumber
       LOCAL p AS PolarNumber
@@ -118,6 +130,7 @@ CLASS cMathHelper
 
       METHOD = p
     END METHOD
+
 
     'Raise a complex number by a arbitrary power.
     METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS EXTENDED) AS ComplexNumber
@@ -131,6 +144,7 @@ CLASS cMathHelper
       METHOD = z
     END METHOD
 
+
     'Convert a complex number into its polar form
     METHOD ComplexToPolar(BYVAL IN z AS ComplexNumber) AS PolarNumber
       LOCAL p AS polarNumber
@@ -141,6 +155,7 @@ CLASS cMathHelper
       METHOD = p
     END METHOD
 
+
     'Convert a polar number into its complex form.
     METHOD PolarToComplex(BYVAL IN p AS PolarNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
@@ -150,6 +165,7 @@ CLASS cMathHelper
 
       METHOD = z
     END METHOD
+
 
     'Get the ArcTangent2 of x and y
     METHOD ATAN2(BYVAL IN x AS EXTENDED, BYVAL IN y AS EXTENDED) AS EXTENDED
@@ -181,6 +197,7 @@ CLASS cMathHelper
     '  Inverse Trigonometric functions
     '===================================
 
+
     'The ArcSin function
     METHOD ArcSin(BYVAL IN a AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
@@ -190,6 +207,27 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+
+    'The SinH function
+    METHOD SinH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      result = (EXP(a) - EXP(-a)) / 2
+
+      METHOD = result
+    END METHOD
+
+
+    'The ArcSinH function
+    METHOD ArcSinH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      result = LOG(a + SQR(a * a + 1))
+
+      METHOD = result
+    END METHOD
+
+
     'The ArcCos Function
     METHOD ArcCos(BYVAL IN a AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
@@ -198,6 +236,29 @@ CLASS cMathHelper
 
       METHOD = result
     END METHOD
+
+
+   'The CosH function
+    METHOD CosH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      result = Pi / 2 - ATN(a / SQR(1 - a * a))
+
+      METHOD = result
+    END METHOD
+
+
+    'The ArcCosH function
+    'If -1 <= a >= 1 then the result of SQR(a*a-1) is in the imaginary plane
+    ' To make complex version need to find out how to do a ???LOG of a complex number???
+    METHOD ArcCosH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      result = LOG(a + SQR(a * a - 1))
+
+      METHOD = result
+    END METHOD
+
 
 
     '===================================
@@ -232,6 +293,7 @@ CLASS cMathHelper
       @pDataOut[0] = (@pDataOut[0] / ScaleOut) * SQR( 1 /(DCTSize+1))
 
     END METHOD
+
 
     'The inverse discrete cosine transform.
     '  pDataIn   A pointer to the source array of extended data type.
