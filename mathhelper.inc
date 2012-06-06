@@ -240,6 +240,15 @@ CLASS cMathHelper
     END METHOD
 
 
+    METHOD QuatNorm(BYVAL IN a AS QuaternionNumber) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      Result = SQR((a.r * a.r) + (a.i * a.i) + (a.j * a.j) + (a.k * a.k))
+
+      METHOD = result
+    END METHOD
+
+
     '===================================
     '  Inverse Trigonometric functions
     '===================================

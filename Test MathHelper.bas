@@ -411,6 +411,15 @@ FUNCTION PBMAIN () AS LONG
       " expected " + STR$(q.r) + "+" + STR$(q.i) + "i," + STR$(q.j) + "j," + STR$(q.k) + "k" + $CRLF
     END IF
 
+    TestString += "  Testing QuatNorm : "
+    q = MathHelper.QuaternionNumber(5, 6, 7, 8)
+    e = MathHelper.QuatNorm(q)
+    f = 13.1909059582729192
+    IF RoundCompare(e, f, 16) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
 
   END IF
 
