@@ -42,9 +42,11 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.Pi()
     TestString += "  Testing Pi : " + TestExtended(e, 3.14159265358979323846264, 17)
 
+
     'Set a Number
     z = MathHelper.ComplexNumber(1.2, 3.4)
     TestString += "  Testing ComplexNumber: " + TestComplex1(z, 1.2, 3.4, 18)
+
 
     'Complex Addition
     a = MathHelper.ComplexNumber(1, 2)
@@ -52,11 +54,13 @@ FUNCTION PBMAIN () AS LONG
     z = MathHelper.ComplexAddition(a, b)
     TestString += "  Testing ComplexAddition: " + TestComplex1(z, 4, 6, 18)
 
+
     'Complex Subtraction
     a = MathHelper.ComplexNumber(1, 2)
     b = MathHelper.ComplexNumber(3, 5)
     z = MathHelper.ComplexSubtraction(a, b)
     TestString += "  Testing ComplexSubtraction: " + TestComplex1(z, -2, -3, 18)
+
 
     'Complex Multplication
     a = MathHelper.ComplexNumber(2, 3)
@@ -64,36 +68,35 @@ FUNCTION PBMAIN () AS LONG
     z = MathHelper.ComplexMultiply(a, b)
     TestString += "  Testing ComplexMultiply: " + TestComplex1(z, -7, 22, 18)
 
+
     'Complex division
     a = MathHelper.ComplexNumber(1, 2)
     b = MathHelper.ComplexNumber(2, 3)
     z = MathHelper.ComplexDivide(a, b)
     TestString += "  Testing ComplexDivision: " + TestComplex1(z, (8/13), (1/13), 18)
 
+
     'Complex Square root
     a = MathHelper.ComplexNumber(4, 0)
     z = MathHelper.ComplexSquareRoot(a)
     TestString += "  Testing ComplexSQR (1/5): " + TestComplex1(z, 2, 0, 18)
 
-    'Complex Square root
     a = MathHelper.ComplexNumber(0, 8)
     z = MathHelper.ComplexSquareRoot(a)
     TestString += "  Testing ComplexSQR (2/5): " + TestComplex1(z, 2, 2, 18)
 
-    'Complex Square root
     a = MathHelper.ComplexNumber(-48, 64)
     z = MathHelper.ComplexSquareRoot(a)
     TestString += "  Testing ComplexSQR (3/5): " + TestComplex1(z, 4, 8, 18)
 
-    'Complex Square root
     a = MathHelper.ComplexNumber(-48, -64)
     z = MathHelper.ComplexSquareRoot(a)
     TestString += "  Testing ComplexSQR (4/5): " + TestComplex1(z, 4, -8, 18)
 
-    'Complex Square root
     a = MathHelper.ComplexNumber(-4, 0)
     z = MathHelper.ComplexSquareRoot(a)
     TestString += "  Testing ComplexSQR (5/5): " + TestComplex1(z, 0, 2, 18)
+
 
     'Complex ATAN2
     e = MathHelper.ATAN2(0.5,0.5)
@@ -111,6 +114,7 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.ATAN2(0,0)
     TestString += "  Testing ATAN2 (0,0) : " + TestExtended(e, 0, 18)
 
+
     'ComplexToPolar
     a = MathHelper.ComplexNumber(4, -4)
     p = MathHelper.ComplexToPolar(a)
@@ -122,10 +126,12 @@ FUNCTION PBMAIN () AS LONG
     a = MathHelper.PolarToComplex(p)
     TestString += "  Testing PolarToComplex : " + TestComplex1(a, 4, -4, 15)
 
+
     'ComplexConjugate
     a = MathHelper.ComplexNumber(12, 34)
     a = MathHelper.ComplexConjugate(a)
     TestString += "  Testing ComplexConjugate : " + TestComplex1(a, 12, -34, 15)
+
 
     'PolarPower
     p = MathHelper.PolarNumber(2, 3)
@@ -148,21 +154,26 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.SinH(0.5)
     TestString += "  Testing SinH : " + TestExtended(e, 0.521095305493747362, 18)
 
+
     'ArcSinH
     e = MathHelper.ArcSinH(0.5)
     TestString += "  Testing ArcSinH : " + TestExtended(e, 0.481211825059603448, 18)
+
 
     'CosH
     e = MathHelper.CosH(0.5)
     TestString += "  Testing CosH : " + TestExtended(e, 1.04719755119659774, 17)
 
+
     'ArcCosH
     e = MathHelper.ArcCosH(1.5)
     TestString += "  Testing ArcCosH : " + TestExtended(e, 0.962423650119206895, 17)
 
+
     'ArcCos
     e = ROUND(MathHelper.ArcCos(COS(0.5)),17)
     TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 17)
+
 
     'DCT
     DataIn(0)=21
@@ -184,6 +195,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(7)=8.75951873558976203
     TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
 
+
     'IDCT
     DataIn(0)=19.0918830920367832
     DataIn(1)=6.29065550725971153
@@ -204,6 +216,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(7)=1
     TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
 
+
     'Dot
     DataIn(0)=1
     DataIn(1)=1
@@ -216,33 +229,20 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.DOT(VARPTR(DataIn(0)), VARPTR(DataIn(4)), 3)
     TestString += "  Testing DOT : " + TestExtended(e, 102, 18)
 
+
     'Quaternion Addition
-    TestString += "  Testing QuatAddition: "
     q = MathHelper.QuaternionNumber(1, 2, 3, 4)
     r = MathHelper.QuaternionNumber(5, 6, 7, 8)
     s = MathHelper.QuatAddition(q, r)
-    q = MathHelper.QuaternionNumber(6, 8, 10, 12)
-    IF s = q THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED " + $CRLF + _
-      " recieved " + STR$(s.r) + "+" + STR$(s.i) + "i," + STR$(s.j) + "j," + STR$(s.k) + "k" + $CRLF +_
-      " expected " + STR$(q.r) + "+" + STR$(q.i) + "i," + STR$(q.j) + "j," + STR$(q.k) + "k" + $CRLF
-    END IF
+    TestString += "  Testing QuatAddition: " + TestQuaternion(s, 6, 8, 10, 12, 18)
+
 
     'Quaternion Addition
-    TestString += "  Testing QuatAddition: "
     q = MathHelper.QuaternionNumber(1, 2, 3, 4)
     r = MathHelper.QuaternionNumber(5, 6, 7, 8)
     s = MathHelper.QuatMultiplication(q, r)
-    q = MathHelper.QuaternionNumber(-60, 12, 30, 24)
-    IF s = q THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED " + $CRLF + _
-      " recieved " + STR$(s.r) + "+" + STR$(s.i) + "i," + STR$(s.j) + "j," + STR$(s.k) + "k" + $CRLF +_
-      " expected " + STR$(q.r) + "+" + STR$(q.i) + "i," + STR$(q.j) + "j," + STR$(q.k) + "k" + $CRLF
-    END IF
+    TestString += "  Testing QuatAddition: " + TestQuaternion(s, -60, 12, 30, 24, 18)
+
 
     'QuatNorm
     q = MathHelper.QuaternionNumber(5, 6, 7, 8)
@@ -327,4 +327,29 @@ FUNCTION TestArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS ST
   END IF
 
   FUNCTION = result
+END FUNCTION
+
+
+FUNCTION TestQuaternion(s AS QuaternionNumber, r AS EXTENDED, i AS EXTENDED, j AS EXTENDED, k AS EXTENDED, precision AS LONG) AS STRING
+    LOCAL result AS STRING
+    LOCAL test AS LONG
+
+    test = %False
+    IF ROUND(s.r,precision) = ROUND(r,precision) THEN
+      IF ROUND(s.i,precision) = ROUND(i,precision) THEN
+        IF ROUND(s.j,precision) = ROUND(j,precision) THEN
+          IF ROUND(s.k,precision) = ROUND(k,precision) THEN test = %True
+        END IF
+      END IF
+    END IF
+
+    IF ISTRUE(test) THEN
+      result = "PASS" + $CRLF
+    ELSE
+      result = "FAILED " + $CRLF + _
+      " recieved " + STR$(ROUND(s.r,precision)) + "+" + STR$(ROUND(s.i,precision)) + "i," + STR$(ROUND(s.j,precision)) + "j," + STR$(ROUND(s.k,precision)) + "k" + $CRLF +_
+      " expected " + STR$(ROUND(r,precision)) + "+" + STR$(ROUND(i,precision)) + "i," + STR$(ROUND(j,precision)) + "j," + STR$(ROUND(k,precision)) + "k" + $CRLF
+    END IF
+
+    FUNCTION = result
 END FUNCTION
