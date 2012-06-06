@@ -15,6 +15,13 @@ TYPE PolarNumber
   radians AS EXTENDED
 END TYPE
 
+TYPE QuaternionNumber
+  r AS EXTENDED
+  i AS EXTENDED
+  j AS EXTENDED
+  k AS EXTENDED
+END TYPE
+
 CLASS cMathHelper
   INSTANCE Pi AS EXTENDED
 
@@ -194,6 +201,46 @@ CLASS cMathHelper
 
 
     '===================================
+    '       Quaternion functions
+    '===================================
+
+
+    METHOD QuaternionNumber(BYVAL IN r AS EXTENDED, BYVAL IN i AS EXTENDED, BYVAL IN j AS EXTENDED, BYVAL IN k AS EXTENDED) AS QuaternionNumber
+      LOCAL Result AS QuaternionNumber
+
+      Result.r = r
+      Result.i = i
+      Result.j = j
+      Result.k = k
+
+      METHOD = Result
+    END METHOD
+
+
+    METHOD QuatAddition(BYVAL IN a AS QuaternionNumber, BYVAL IN b AS QuaternionNumber) AS QuaternionNumber
+      LOCAL result AS QuaternionNumber
+
+      Result.r = a.r + b.r
+      Result.i = a.i + b.i
+      Result.j = a.j + b.j
+      Result.k = a.k + b.k
+
+      METHOD = result
+    END METHOD
+
+    METHOD QuatMultiplication(BYVAL IN a AS QuaternionNumber, BYVAL IN b AS QuaternionNumber) AS QuaternionNumber
+      LOCAL result AS QuaternionNumber
+
+      Result.r = (a.r * b.r) - (a.i * b.i) - (a.j * b.j) - (a.k * b.k)
+      Result.i = (a.r * b.i) + (a.i * b.r) + (a.j * b.k) - (a.k * b.j)
+      Result.j = (a.r * b.j) - (a.i * b.k) + (a.j * b.r) + (a.k * b.i)
+      Result.k = (a.r * b.k) + (a.i * b.j) - (a.j * b.i) + (a.k * b.r)
+
+      METHOD = result
+    END METHOD
+
+
+    '===================================
     '  Inverse Trigonometric functions
     '===================================
 
@@ -327,7 +374,6 @@ CLASS cMathHelper
 
     END METHOD
 
-    'e = MathHelper.DOT(VARPTR(DataIn(0)), VARPTR(DataOut(4)), 3)
     'Returns the Dot product of Two Arrays of EXTENDED type
     METHOD Dot(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN DotSize AS LONG) AS EXTENDED
       LOCAL Sum AS EXTENDED

@@ -17,8 +17,11 @@ FUNCTION PBMAIN () AS LONG
   LOCAL z AS ComplexNumber
   LOCAL e AS EXTENDED
   LOCAL f AS EXTENDED
+  LOCAL o AS PolarNumber
   LOCAL p AS PolarNumber
-  LOCAL q AS PolarNumber
+  LOCAL q AS QuaternionNumber
+  LOCAL r AS QuaternionNumber
+  LOCAL s AS QuaternionNumber
   LOCAL DataIn(), DataOut(), DataCheck() AS EXTENDED
 
   LOCAL TestString AS STRING
@@ -201,12 +204,12 @@ FUNCTION PBMAIN () AS LONG
     p = MathHelper.ComplexToPolar(a)
     p.radius = ROUND(p.radius, 15)
     p.radians = ROUND(p.radians, 18)
-    q.radius = 5.656854249492380
-    q.radians = -0.785398163397448310
-    IF p = q THEN
+    o.radius = 5.656854249492380
+    o.radians = -0.785398163397448310
+    IF p = o THEN
       TestString += "PASS" + $CRLF
     ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(p.radius,18) + " º=" + STR$(p.radians,18) + $CRLF + "    expected r=" + STR$(q.radius,18) + " º=" + STR$(q.radians,18) + $CRLF
+      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(p.radius,18) + " º=" + STR$(p.radians,18) + $CRLF + "    expected r=" + STR$(o.radius,18) + " º=" + STR$(o.radians,18) + $CRLF
     END IF
 
     TestString += "  Testing PolarToComplex : "
@@ -377,6 +380,35 @@ FUNCTION PBMAIN () AS LONG
       TestString += "PASS" + $CRLF
     ELSE
       TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+
+    'Quaternion Addition
+    TestString += "  Testing QuatAddition: "
+    q = MathHelper.QuaternionNumber(1, 2, 3, 4)
+    r = MathHelper.QuaternionNumber(5, 6, 7, 8)
+    s = MathHelper.QuatAddition(q, r)
+    q = MathHelper.QuaternionNumber(6, 8, 10, 12)
+    IF s = q THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED " + $CRLF + _
+      " recieved " + STR$(s.r) + "+" + STR$(s.i) + "i," + STR$(s.j) + "j," + STR$(s.k) + "k" + $CRLF +_
+      " expected " + STR$(q.r) + "+" + STR$(q.i) + "i," + STR$(q.j) + "j," + STR$(q.k) + "k" + $CRLF
+    END IF
+
+    'Quaternion Addition
+    TestString += "  Testing QuatAddition: "
+    q = MathHelper.QuaternionNumber(1, 2, 3, 4)
+    r = MathHelper.QuaternionNumber(5, 6, 7, 8)
+    s = MathHelper.QuatMultiplication(q, r)
+    q = MathHelper.QuaternionNumber(-60, 12, 30, 24)
+    IF s = q THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED " + $CRLF + _
+      " recieved " + STR$(s.r) + "+" + STR$(s.i) + "i," + STR$(s.j) + "j," + STR$(s.k) + "k" + $CRLF +_
+      " expected " + STR$(q.r) + "+" + STR$(q.i) + "i," + STR$(q.j) + "j," + STR$(q.k) + "k" + $CRLF
     END IF
 
 
