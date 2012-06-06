@@ -36,285 +36,132 @@ FUNCTION PBMAIN () AS LONG
     TestString += "  Unable to make object" + $CRLF
   ELSE
     'Complex Pi
-    TestString += "  Testing Pi : "
     e = MathHelper.Pi()
-    IF e = 3.14159265358979323846264 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,17) + " expected pi" + $CRLF
-    END IF
-
+    TestString += "  Testing Pi : " + TestExtended(e, 3.14159265358979323846264, 17)
 
     'Set a Number
-    TestString += "  Testing ComplexNumber: "
     z = MathHelper.ComplexNumber(1.2, 3.4)
-    IF z.real = 1.2 AND z.img = 3.4 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 1.2 + 3.4i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexNumber: " + TestComplex1(z, 1.2, 3.4, 18)
 
     'Complex Addition
-    TestString += "  Testing ComplexAddition: "
     a = MathHelper.ComplexNumber(1, 2)
     b = MathHelper.ComplexNumber(3, 4)
     z = MathHelper.ComplexAddition(a, b)
-    IF z.real = 4 AND z.img = 6 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 4 + 6i" + $CRLF
-    END IF
-
+    TestString += "  Testing ComplexAddition: " + TestComplex1(z, 4, 6, 18)
 
     'Complex Subtraction
-    TestString += "  Testing ComplexSubtraction: "
     a = MathHelper.ComplexNumber(1, 2)
-    b = MathHelper.ComplexNumber(3, 4)
+    b = MathHelper.ComplexNumber(3, 5)
     z = MathHelper.ComplexSubtraction(a, b)
-    IF z.real = -2 AND z.img = -2 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected -2 + -2i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexSubtraction: " + TestComplex1(z, -2, -3, 18)
 
     'Complex Multplication
-    TestString += "  Testing ComplexMultiply: "
     a = MathHelper.ComplexNumber(2, 3)
     b = MathHelper.ComplexNumber(4, 5)
     z = MathHelper.ComplexMultiply(a, b)
-    IF z.real = -7 AND z.img = 22 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected -7 + 22i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexMultiply: " + TestComplex1(z, -7, 22, 18)
 
     'Complex division
-    TestString += "  Testing ComplexDivision: "
     a = MathHelper.ComplexNumber(1, 2)
     b = MathHelper.ComplexNumber(2, 3)
     z = MathHelper.ComplexDivide(a, b)
-    IF z.real = (8/13) AND z.img = (1/13) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected (8/13) + (1/13)i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexDivision: " + TestComplex1(z, (8/13), (1/13), 18)
 
     'Complex Square root
-    TestString += "  Testing ComplexSQR (1/5): "
     a = MathHelper.ComplexNumber(4, 0)
     z = MathHelper.ComplexSquareRoot(a)
-    IF z.real = 2 AND z.img = 0 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 2 + 0i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexSQR (1/5): " + TestComplex1(z, 2, 0, 18)
 
     'Complex Square root
-    TestString += "  Testing ComplexSQR (2/5): "
     a = MathHelper.ComplexNumber(0, 8)
     z = MathHelper.ComplexSquareRoot(a)
-    IF z.real = 2 AND z.img = 2 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 2 + 2i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexSQR (2/5): " + TestComplex1(z, 2, 2, 18)
 
     'Complex Square root
-    TestString += "  Testing ComplexSQR (3/5): "
     a = MathHelper.ComplexNumber(-48, 64)
     z = MathHelper.ComplexSquareRoot(a)
-    IF z.real = 4 AND z.img = 8 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 4 + 8i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexSQR (3/5): " + TestComplex1(z, 4, 8, 18)
 
     'Complex Square root
-    TestString += "  Testing ComplexSQR (4/5): "
     a = MathHelper.ComplexNumber(-48, -64)
     z = MathHelper.ComplexSquareRoot(a)
-    IF z.real = 4 AND z.img = -8 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 4 + (-8)i" + $CRLF
-    END IF
+    TestString += "  Testing ComplexSQR (4/5): " + TestComplex1(z, 4, -8, 18)
 
-    TestString += "  Testing ComplexSQR (5/5): "
+    'Complex Square root
     a = MathHelper.ComplexNumber(-4, 0)
     z = MathHelper.ComplexSquareRoot(a)
-    IF z.real = 0 AND z.img = 2 THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(z.real) + "+" + STR$(z.img) + "i expected 0 + 2i" + $CRLF
-    END IF
-
+    TestString += "  Testing ComplexSQR (5/5): " + TestComplex1(z, 0, 2, 18)
 
     'Complex ATAN2
-    TestString += "  Testing ATAN2 (0.5,0.5) : "
-    e = ROUND(MathHelper.ATAN2(0.5,0.5), 18)
-    f = 0.785398163397448310
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,18) + " expected " + STR$(f,18) + $CRLF
-    END IF
+    e = MathHelper.ATAN2(0.5,0.5)
+    TestString += "  Testing ATAN2 (0.5,0.5) : " + TestExtended(e, 0.785398163397448310, 18)
 
-    TestString += "  Testing ATAN2 (0.5,-0.5) : "
-    e = ROUND(MathHelper.ATAN2(0.5,-0.5), 18)
-    f = -0.785398163397448310
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,18) + " expected " + STR$(f,18) + $CRLF
-    END IF
+    e = MathHelper.ATAN2(0.5,-0.5)
+    TestString += "  Testing ATAN2 (0.5,-0.5) : " + TestExtended(e, -0.785398163397448310, 18)
 
-    TestString += "  Testing ATAN2 (-0.5,0.5) : "
     e = ROUND(MathHelper.ATAN2(-0.5,0.5), 18)
-    f = 2.356194490192344929
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,18) + " expected " + STR$(f,18) + $CRLF
-    END IF
+    TestString += "  Testing ATAN2 (-0.5,0.5) : " + TestExtended(e, 2.356194490192344929, 18)
 
-    TestString += "  Testing ATAN2 (-0.5,-0.5) : "
     e = ROUND(MathHelper.ATAN2(-0.5,-0.5), 18)
-    f = -2.356194490192344929
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,18) + " expected " + STR$(f,18) + $CRLF
-    END IF
+    TestString += "  Testing ATAN2 (-0.5,-0.5) : " + TestExtended(e, -2.356194490192344929, 18)
 
-    TestString += "  Testing ATAN2 (0,0) : "
     e = MathHelper.ATAN2(0,0)
-    f = 0
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved " + STR$(e,18) + " expected pi/2" + $CRLF
-    END IF
+    TestString += "  Testing ATAN2 (0,0) : " + TestExtended(e, 0, 18)
 
-
-    TestString += "  Testing ComplexToPolar : "
+    'ComplexToPolar
     a = MathHelper.ComplexNumber(4, -4)
     p = MathHelper.ComplexToPolar(a)
-    p.radius = ROUND(p.radius, 15)
-    p.radians = ROUND(p.radians, 18)
-    q.radius = 5.656854249492380
-    q.radians = -0.785398163397448310
-    IF p = q THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(p.radius,18) + " º=" + STR$(p.radians,18) + $CRLF + "    expected r=" + STR$(q.radius,18) + " º=" + STR$(q.radians,18) + $CRLF
-    END IF
+    TestString += "  Testing ComplexToPolar : " + TestPolar(p, 5.656854249492380, -0.785398163397448310, 15)
 
-    TestString += "  Testing PolarToComplex : "
+
+    'PolarToComplex
     p = MathHelper.PolarNumber(5.656854249492380, -0.785398163397448310)
     a = MathHelper.PolarToComplex(p)
-    a.real = ROUND(a.real, 15) 'Seem to lose 3 to 4 digits of persion
-    a.img = ROUND(a.img, 15)
-    b = MathHelper.ComplexNumber(4, -4)
-    IF a = b THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
-    END IF
+    TestString += "  Testing PolarToComplex : " + TestComplex1(a, 4, -4, 15)
 
-    TestString += "  Testing ComplexConjugate : "
+    'ComplexConjugate
     a = MathHelper.ComplexNumber(12, 34)
     a = MathHelper.ComplexConjugate(a)
-    b = MathHelper.ComplexNumber(12, -34)
-    IF a = b THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
-    END IF
+    TestString += "  Testing ComplexConjugate : " + TestComplex1(a, 12, -34, 15)
 
-    TestString += "  Testing PolarPower : "
-    a = MathHelper.ComplexNumber(2, 3)
-    p = MathHelper.ComplexToPolar(a)
+    'PolarPower
+    p = MathHelper.PolarNumber(2, 3)
     p = MathHelper.PolarPower(p, 4)
-    a = MathHelper.PolarToComplex(p)
-    a.real = ROUND(a.real, 15)
-    a.img = ROUND(a.img, 15)
-    b = MathHelper.ComplexNumber(-119, -120)
-    IF a = b THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
-    END IF
+    TestString += "  Testing PolarPower : " + TestPolar(p, 16, 12, 18)
 
-    TestString += "  Testing ComplexPower : "
+
+    'ComplexPower
     a = MathHelper.ComplexNumber(2, 3)
     a = MathHelper.ComplexPower(a, 4)
-    a = MathHelper.PolarToComplex(p)
-    a.real = ROUND(a.real, 15)
-    a.img = ROUND(a.img, 15)
-    b = MathHelper.ComplexNumber(-119, -120)
-    IF a = b THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  r=" + STR$(a.real,18) + " i=" + STR$(a.img,18) + $CRLF + "    expected r=" + STR$(b.real,18) + " i=" + STR$(b.img,18) + $CRLF
-    END IF
+    TestString += "  Testing ComplexPower : " + TestComplex1(a, -119, -120, 16)
 
 
-    TestString += "  Testing ArcSin : "
+    'ArcSin
     e = MathHelper.ArcSin(SIN(0.5))
-    f = 0.5
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing ArcSin : " + TestExtended(e, 0.5, 18)
 
-    TestString += "  Testing SinH : "
+
+    'SinH
     e = MathHelper.SinH(0.5)
-    f = 0.521095305493747362
-    IF RoundCompare(e, f, 18) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing SinH : " + TestExtended(e, 0.521095305493747362, 18)
 
-    TestString += "  Testing ArcSinH : "
+    'ArcSinH
     e = MathHelper.ArcSinH(0.5)
-    f = 0.481211825059603448
-    IF RoundCompare(e, f, 18) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing ArcSinH : " + TestExtended(e, 0.481211825059603448, 18)
 
-    TestString += "  Testing CosH : "
+    'CosH
     e = MathHelper.CosH(0.5)
-    f = 1.04719755119659774
-    IF RoundCompare(e, f, 17) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing CosH : " + TestExtended(e, 1.04719755119659774, 17)
 
-    TestString += "  Testing ArcCosH : "
+    'ArcCosH
     e = MathHelper.ArcCosH(1.5)
-    f = 0.962423650119206895
-    IF RoundCompare(e, f, 18) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing ArcCosH : " + TestExtended(e, 0.962423650119206895, 17)
 
-
-    TestString += "  Testing ArcCos : "
+    'ArcCos
     e = ROUND(MathHelper.ArcCos(COS(0.5)),17)
-    f = 0.5
-    IF e = f THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
+    TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 17)
 
-    TestString += "  Testing DCT : "
+    'DCT
     DataIn(0)=21
     DataIn(1)=1
     DataIn(2)=8
@@ -332,13 +179,9 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=11.1942153663612446
     DataCheck(6)=.831024961533054953
     DataCheck(7)=8.75951873558976203
-    IF CompareArray(DataOut(), DataCheck(), 7, 16) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved  " + $CRLF + ArrayToString(DataOut(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(DataCheck(), 7, 4) + $CRLF
-    END IF
+    TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
 
-    TestString += "  Testing IDCT : "
+    'IDCT
     DataIn(0)=19.0918830920367832
     DataIn(1)=6.29065550725971153
     DataIn(2)=7.23252359230918676
@@ -356,13 +199,9 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=2
     DataCheck(6)=13
     DataCheck(7)=1
-    IF CompareArray(DataOut(), DataCheck(), 7, 16) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED recieved  " + $CRLF + ArrayToString(DataOut(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(DataCheck(), 7, 4) + $CRLF
-    END IF
+    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
 
-    TestString += "  Testing DOT : "
+    'Dot
     DataIn(0)=1
     DataIn(1)=1
     DataIn(2)=2
@@ -372,13 +211,7 @@ FUNCTION PBMAIN () AS LONG
     DataIn(6)=13
     DataIn(7)=21
     e = MathHelper.DOT(VARPTR(DataIn(0)), VARPTR(DataIn(4)), 3)
-    f = 102
-    IF RoundCompare(e, f, 18) THEN
-      TestString += "PASS" + $CRLF
-    ELSE
-      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
-    END IF
-
+    TestString += "  Testing DOT : " + TestExtended(e, 102, 18)
 
   END IF
 
@@ -386,6 +219,7 @@ FUNCTION PBMAIN () AS LONG
   MSGBOX TestString
 
 END FUNCTION
+
 
 FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG) AS STRING
   LOCAL i AS LONG
@@ -398,27 +232,63 @@ FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG
   FUNCTION = StringOut
 END FUNCTION
 
-FUNCTION CompareArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS LONG
-  LOCAL i AS LONG
-  LOCAL result AS LONG
 
-  result = %True
-  FOR i=0 TO l
-    IF ROUND(a(i), p) <> ROUND(b(i), p) THEN Result = %False: EXIT FOR
-  NEXT i
+FUNCTION TestExtended(test AS EXTENDED, expected AS EXTENDED, r AS LONG) AS STRING
+  LOCAL result AS STRING
+
+  IF ROUND(test, r) = ROUND(expected, r) THEN
+    result = "PASS" + $CRLF
+  ELSE
+    result = "FAILED" + $CRLF + "    recieved  " + STR$(ROUND(test, r)) + $CRLF + "    expected " + STR$(ROUND(expected, r)) + $CRLF
+  END IF
 
   FUNCTION = result
 END FUNCTION
 
-FUNCTION RoundCompare(a AS EXTENDED, b AS EXTENDED, p AS LONG) AS LONG
-  LOCAL result AS LONG
 
-  IF ROUND(a, p) = ROUND(b, p) THEN
-    Result = %True
+FUNCTION TestComplex1(z AS ComplexNumber, Real As EXTENDED, Img AS EXTENDED, r AS LONG) AS STRING
+  LOCAL result AS STRING
+
+  IF ROUND(z.real,r) = ROUND(Real,r) AND ROUND(z.img,r) = ROUND(Img,r) THEN
+    result += "PASS" + $CRLF
   ELSE
-    Result = %False
+    result += "FAILED" + $CRLF + "    recieved  (" + STR$(ROUND(z.real,r)) + "+" + STR$(ROUND(z.img,r)) + "i)" + $CRLF +_
+     "    expected (" + STR$(ROUND(Real,r)) + "+" + STR$(ROUND(Img,r)) + "i)" + $CRLF
   END IF
 
+  FUNCTION = result
+END FUNCTION
+
+
+FUNCTION TestPolar(p AS PolarNumber, Radius As EXTENDED, Radians AS EXTENDED, r AS LONG) AS STRING
+  LOCAL result AS STRING
+
+  IF ROUND(p.Radius, r) = ROUND(Radius, r) AND ROUND(p.Radians, r) = ROUND(Radians, r) THEN
+    result += "PASS" + $CRLF
+  ELSE
+    result += "FAILED" + $CRLF + "    recieved  (" + STR$(ROUND(p.Radius,r)) + "+" + STR$(ROUND(p.Radians,r)) + "i)" + $CRLF +_
+     "    expected (" + STR$(ROUND(Radius,r)) + "+" + STR$(ROUND(Radians,r)) + "r)" + $CRLF
+  END IF
+
+  FUNCTION = result
+END FUNCTION
+
+
+FUNCTION TestArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS STRING
+  LOCAL i AS LONG
+  LOCAL test AS LONG
+  LOCAL Result AS STRING
+
+  test = %True
+  FOR i=0 TO l
+    IF ROUND(a(i), p) <> ROUND(b(i), p) THEN test = %False: EXIT FOR
+  NEXT i
+
+  IF test THEN
+    Result = "PASS" + $CRLF
+  ELSE
+    Result = "FAILED recieved  " + $CRLF + ArrayToString(a(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(b(), 7, 4) + $CRLF
+  END IF
 
   FUNCTION = result
 END FUNCTION
