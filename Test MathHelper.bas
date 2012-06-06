@@ -362,6 +362,24 @@ FUNCTION PBMAIN () AS LONG
       TestString += "FAILED recieved  " + $CRLF + ArrayToString(DataOut(), 7, 4) + $CRLF + "    expected " + $CRLF + ArrayToString(DataCheck(), 7, 4) + $CRLF
     END IF
 
+    TestString += "  Testing DOT : "
+    DataIn(0)=1
+    DataIn(1)=1
+    DataIn(2)=2
+    DataIn(3)=3
+    DataIn(4)=5
+    DataIn(5)=8
+    DataIn(6)=13
+    DataIn(7)=21
+    e = MathHelper.DOT(VARPTR(DataIn(0)), VARPTR(DataIn(4)), 3)
+    f = 102
+    IF RoundCompare(e, f, 18) THEN
+      TestString += "PASS" + $CRLF
+    ELSE
+      TestString += "FAILED "+$CRLF +"    recieved  " + STR$(e,18)  + $CRLF + "    expected " + STR$(f,18)  + $CRLF
+    END IF
+
+
   END IF
 
   'Show the results

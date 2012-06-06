@@ -17,6 +17,7 @@ o Other
  + New METHOD IDCT(In, Out, Size)             : Performs a Inverse Discrete Cosine Transform on In and Places the results in Out
  + New METHOD ComplexPower(z, P)              : Raises z to the power of P
  + New METHOD PolarPower(p1, P)               : Raises a Polar number (p1) by the power of P
+ + New METHOD Dot(In1, In2, Size)             : Returns the Dot product of two extended arrays
  o Small improvments to documentation
 
 

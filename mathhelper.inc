@@ -327,6 +327,20 @@ CLASS cMathHelper
 
     END METHOD
 
+    'e = MathHelper.DOT(VARPTR(DataIn(0)), VARPTR(DataOut(4)), 3)
+    'Returns the Dot product of Two Arrays of EXTENDED type
+    METHOD Dot(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN DotSize AS LONG) AS EXTENDED
+      LOCAL Sum AS EXTENDED
+      LOCAL i AS LONG
+
+      Sum = 0
+      FOR i = 0 TO DotSize
+        sum += @pIn1[i] * @pIn2[i]
+      NEXT i
+
+      METHOD = Sum
+    END METHOD
+
 
   END INTERFACE
 END CLASS
