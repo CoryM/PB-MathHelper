@@ -35,9 +35,13 @@ FUNCTION PBMAIN () AS LONG
   IF ISNOTHING(MathHelper) THEN
     TestString += "  Unable to make object" + $CRLF
   ELSE
-    'Complex Pi
+    'Pi
     e = MathHelper.Pi()
     TestString += "  Testing Pi : " + TestExtended(e, 3.14159265358979323846264, 17)
+
+    'Tau
+    e = MathHelper.Tau()
+    TestString += "  Testing Tau : " + TestExtended(e, 6.28318530717958647692528, 17)
 
     'Set a Number
     z = MathHelper.ComplexNumber(1.2, 3.4)

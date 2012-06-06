@@ -17,10 +17,12 @@ END TYPE
 
 CLASS cMathHelper
   INSTANCE Pi AS EXTENDED
+  INSTANCE Tau AS EXTENDED
 
 
   CLASS METHOD CREATE()
     Pi = 3.14159265358979323846264
+    Tau = 6.28318530717958647692528
   END METHOD
 
 
@@ -29,8 +31,16 @@ CLASS cMathHelper
     INHERIT IUNKNOWN
 
 
+    '=======================
+    '       Constants
+    '=======================
+
     METHOD Pi () AS EXTENDED
       METHOD = Pi
+    END METHOD
+
+    METHOD Tau () AS EXTENDED
+      METHOD = Tau
     END METHOD
 
 

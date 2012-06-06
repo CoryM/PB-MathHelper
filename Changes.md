@@ -18,6 +18,7 @@ o Other
  + New METHOD ComplexPower(z, P)              : Raises z to the power of P
  + New METHOD PolarPower(p1, P)               : Raises a Polar number (p1) by the power of P
  + New METHOD Dot(In1, In2, Size)             : Returns the Dot product of two extended arrays
+ + New Constant Tau                           : Returns Tau.  Tau = 2*Pi
  o Small improvments to documentation
 
 
