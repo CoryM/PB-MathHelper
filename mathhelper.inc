@@ -3,34 +3,59 @@
 ' Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
 #INCLUDE THIS ONCE
-#REGISTER NONE  'Needed for bug in optimazation see: "http://www.powerbasic.com/support/pbforums/showthread.php?p=408285"
+'#REGISTER NONE  'Needed for bug in optimazation see: "http://www.powerbasic.com/support/pbforums/showthread.php?p=408285"
 
 TYPE ComplexNumber
-  Real AS EXTENDED
-  Img AS EXTENDED
+  Real AS DOUBLE
+  Img AS DOUBLE
 END TYPE
 
 TYPE PolarNumber
-  radius AS EXTENDED
-  radians AS EXTENDED
+  radius AS DOUBLE
+  radians AS DOUBLE
 END TYPE
 
 TYPE QuaternionNumber
-  r AS EXTENDED
-  i AS EXTENDED
-  j AS EXTENDED
-  k AS EXTENDED
+  r AS DOUBLE
+  i AS DOUBLE
+  j AS DOUBLE
+  k AS DOUBLE
 END TYPE
 
 CLASS cMathHelper
-  INSTANCE Pi AS EXTENDED
-  INSTANCE Tau AS EXTENDED
+  INSTANCE Pi AS DOUBLE
+  INSTANCE Tau AS DOUBLE
 
 
   CLASS METHOD CREATE()
     Pi = 3.14159265358979323846264
     Tau = 6.28318530717958647692528
   END METHOD
+
+  'Get the ArcTangent2 of x and y
+  CLASS METHOD ExtendedAtan2(BYVAL IN x AS EXTENDED, BYVAL IN y AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
+
+      SELECT CASE x
+        CASE 0:
+          IF y = 0 THEN
+            result = 0
+          ELSEIF y > 0 THEN
+              result = Pi / 2
+          ELSE' y < 0
+              result = -Pi / 2
+          END IF
+        CASE > 0: result = ATN(y/x)
+        CASE < 0:
+          IF y => 0 THEN
+            result = ATN(y / x) + Pi
+          ELSE
+            result = ATN(y / x) - Pi
+          END IF
+      END SELECT
+
+      METHOD = result
+    END METHOD
 
 
   INTERFACE iMathHelper
@@ -42,13 +67,13 @@ CLASS cMathHelper
     '       Constants
     '=======================
 
-    METHOD Pi () AS EXTENDED
-      METHOD = Pi
-    END METHOD
+    PROPERTY GET Pi () AS DOUBLE
+      PROPERTY = Pi
+    END PROPERTY
 
-    METHOD Tau () AS EXTENDED
-      METHOD = Tau
-    END METHOD
+    PROPERTY GET Tau () AS DOUBLE
+      PROPERTY = Tau
+    END PROPERTY
 
 
     '=======================
@@ -57,7 +82,7 @@ CLASS cMathHelper
 
 
     'Helps set a complex number
-    METHOD ComplexNumber(BYVAL IN r AS EXTENDED,BYVAL IN i AS EXTENDED) AS ComplexNumber
+    METHOD ComplexNumber(BYVAL IN r AS DOUBLE,BYVAL IN i AS DOUBLE) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = r
       z.img = i
@@ -66,7 +91,7 @@ CLASS cMathHelper
 
 
     'Helps set a Polar number
-    METHOD PolarNumber(BYVAL IN radius AS EXTENDED, BYVAL IN radians AS EXTENDED) AS PolarNumber
+    METHOD PolarNumber(BYVAL IN radius AS DOUBLE, BYVAL IN radians AS DOUBLE) AS PolarNumber
       LOCAL p AS polarNumber
 
       p.radius = radius
@@ -115,7 +140,7 @@ CLASS cMathHelper
     'Divide complex numbers z1 by z2
     METHOD ComplexDivide(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
-      LOCAL d AS EXTENDED
+      LOCAL d AS DOUBLE
       d = (z2.real * z2.real) + (z2.img * z2.img)
 
       z.real = ((z1.real * z2.real) + (z1.img  * z2.img)) / d
@@ -127,7 +152,7 @@ CLASS cMathHelper
     'Get the SquareRoot of a complex number
     METHOD ComplexSquareRoot(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
-      LOCAL d AS EXTENDED
+      LOCAL d AS DOUBLE
       d = SQR((z1.real * z1.real) + (z1.img * z1.img))
 
       z.real = SQR((z1.real + d)/2)
@@ -138,7 +163,7 @@ CLASS cMathHelper
 
 
     'Raise a complex number in Polar form by a arbitrary power.
-    METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS EXTENDED) AS PolarNumber
+    METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS DOUBLE) AS PolarNumber
       LOCAL p AS PolarNumber
 
       p = p1
@@ -150,7 +175,7 @@ CLASS cMathHelper
 
 
     'Raise a complex number by a arbitrary power.
-    METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS EXTENDED) AS ComplexNumber
+    METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS DOUBLE) AS ComplexNumber
       LOCAL z AS ComplexNumber
       LOCAL p AS PolarNumber
 
@@ -167,11 +192,10 @@ CLASS cMathHelper
       LOCAL p AS polarNumber
 
       p.radius = SQR((z.real * z.real) + (z.img * z.img))
-      p.radians = me.atan2(z.real, z.img)
+      p.radians = me.ExtendedAtan2(z.real, z.img)
 
       METHOD = p
     END METHOD
-
 
     'Convert a polar number into its complex form.
     METHOD PolarToComplex(BYVAL IN p AS PolarNumber) AS ComplexNumber
@@ -185,26 +209,11 @@ CLASS cMathHelper
 
 
     'Get the ArcTangent2 of x and y
-    METHOD ATAN2(BYVAL IN x AS EXTENDED, BYVAL IN y AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD ATAN2(BYVAL IN x AS DOUBLE, BYVAL IN y AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
-      SELECT CASE x
-        CASE 0:
-          IF y = 0 THEN
-            result = 0
-          ELSEIF y > 0 THEN
-              result = Pi / 2
-          ELSE' y < 0
-              result = -Pi / 2
-          END IF
-        CASE > 0: result = ATN(y/x)
-        CASE < 0:
-          IF y => 0 THEN
-            result = ATN(y / x) + Pi
-          ELSE
-            result = ATN(y / x) - Pi
-          END IF
-      END SELECT
+      'Function moved to internal CLASS level function
+      result = Me.ExtendedAtan2(x, y)
 
       METHOD = result
     END METHOD
@@ -215,7 +224,7 @@ CLASS cMathHelper
     '===================================
 
 
-    METHOD QuaternionNumber(BYVAL IN r AS EXTENDED, BYVAL IN i AS EXTENDED, BYVAL IN j AS EXTENDED, BYVAL IN k AS EXTENDED) AS QuaternionNumber
+    METHOD QuaternionNumber(BYVAL IN r AS DOUBLE, BYVAL IN i AS DOUBLE, BYVAL IN j AS DOUBLE, BYVAL IN k AS DOUBLE) AS QuaternionNumber
       LOCAL Result AS QuaternionNumber
 
       Result.r = r
@@ -250,8 +259,8 @@ CLASS cMathHelper
     END METHOD
 
 
-    METHOD QuatNorm(BYVAL IN a AS QuaternionNumber) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD QuatNorm(BYVAL IN a AS QuaternionNumber) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       Result = SQR((a.r * a.r) + (a.i * a.i) + (a.j * a.j) + (a.k * a.k))
 
@@ -265,8 +274,8 @@ CLASS cMathHelper
 
 
     'The ArcSin function
-    METHOD ArcSin(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD ArcSin(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = ATN(a / SQR(1 - a * a))
 
@@ -275,8 +284,8 @@ CLASS cMathHelper
 
 
     'The SinH function
-    METHOD SinH(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD SinH(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = (EXP(a) - EXP(-a)) / 2
 
@@ -285,8 +294,8 @@ CLASS cMathHelper
 
 
     'The ArcSinH function
-    METHOD ArcSinH(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD ArcSinH(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = LOG(a + SQR(a * a + 1))
 
@@ -295,8 +304,8 @@ CLASS cMathHelper
 
 
     'The ArcCos Function
-    METHOD ArcCos(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD ArcCos(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = Pi / 2 - ATN(a / SQR(1 - a * a))
 
@@ -305,8 +314,8 @@ CLASS cMathHelper
 
 
    'The CosH function
-    METHOD CosH(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD CosH(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = Pi / 2 - ATN(a / SQR(1 - a * a))
 
@@ -317,8 +326,8 @@ CLASS cMathHelper
     'The ArcCosH function
     'If -1 <= a >= 1 then the result of SQR(a*a-1) is in the imaginary plane
     ' To make complex version need to find out how to do a ???LOG of a complex number???
-    METHOD ArcCosH(BYVAL IN a AS EXTENDED) AS EXTENDED
-      LOCAL result AS EXTENDED
+    METHOD ArcCosH(BYVAL IN a AS DOUBLE) AS DOUBLE
+      LOCAL result AS DOUBLE
 
       result = LOG(a + SQR(a * a - 1))
 
@@ -332,19 +341,19 @@ CLASS cMathHelper
     '===================================
 
     'The discrete cosine transform.
-    '  pDataIn   A pointer to the source array of extended data type.
-    '  pDataOut  A pointer to the destination array of extended data type.
+    '  pDataIn   A pointer to the source array of DOUBLE data type.
+    '  pDataOut  A pointer to the destination array of DOUBLE data type.
     '  DCTSize   Size of the array that you want to transform including 0.
     '
     'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: DCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
-    METHOD DCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
+    METHOD DCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
       LOCAL k AS LONG
       LOCAL n AS LONG
-      LOCAL Sum AS EXTENDED
-      LOCAL ScaledPi AS EXTENDED
-      LOCAL ScaleOut AS EXTENDED
+      LOCAL Sum AS DOUBLE
+      LOCAL ScaledPi AS DOUBLE
+      LOCAL ScaleOut AS DOUBLE
 
       ScaleOut =  SQR(2 /(DCTSize+1))
 
@@ -362,21 +371,21 @@ CLASS cMathHelper
 
 
     'The inverse discrete cosine transform.
-    '  pDataIn   A pointer to the source array of extended data type.
-    '  pDataOut  A pointer to the destination array of extended data type.
+    '  pDataIn   A pointer to the source array of DOUBLE data type.
+    '  pDataOut  A pointer to the destination array of DOUBLE data type.
     '  DCTSize   Size of the array that you want to transform including 0.
     '
     'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: IDCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
-    METHOD IDCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
+    METHOD IDCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
       LOCAL k AS LONG
       LOCAL n AS LONG
-      LOCAL Sum AS EXTENDED
-      LOCAL p AS EXTENDED
-      LOCAL ScaleOut AS EXTENDED
-      LOCAL ScaleOut0 AS EXTENDED
-      LOCAL ScaledPi AS EXTENDED
+      LOCAL Sum AS DOUBLE
+      LOCAL p AS DOUBLE
+      LOCAL ScaleOut AS DOUBLE
+      LOCAL ScaleOut0 AS DOUBLE
+      LOCAL ScaledPi AS DOUBLE
 
       ScaleOut =  SQR(2 /(DCTSize+1))
       ScaleOut0 =  (@pDataIn[0] * SQR(1 /(DCTSize+1))) / ScaleOut
@@ -393,9 +402,9 @@ CLASS cMathHelper
 
     END METHOD
 
-    'Returns the Dot product of Two Arrays of EXTENDED type
-    METHOD Dot(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN DotSize AS LONG) AS EXTENDED
-      LOCAL Sum AS EXTENDED
+    'Returns the Dot product of Two Arrays of DOUBLE type
+    METHOD Dot(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN DotSize AS LONG) AS DOUBLE
+      LOCAL Sum AS DOUBLE
       LOCAL i AS LONG
 
       Sum = 0

@@ -15,20 +15,20 @@ FUNCTION PBMAIN () AS LONG
   LOCAL a AS ComplexNumber
   LOCAL b AS ComplexNumber
   LOCAL z AS ComplexNumber
-  LOCAL e AS EXTENDED
-  LOCAL f AS EXTENDED
+  LOCAL e AS DOUBLE
+  LOCAL f AS DOUBLE
   LOCAL o AS PolarNumber
   LOCAL p AS PolarNumber
   LOCAL q AS QuaternionNumber
   LOCAL r AS QuaternionNumber
   LOCAL s AS QuaternionNumber
-  LOCAL DataIn(), DataOut(), DataCheck() AS EXTENDED
+  LOCAL DataIn(), DataOut(), DataCheck() AS DOUBLE
 
   LOCAL TestString AS STRING
 
-  DIM DataIn(0 TO 7) AS EXTENDED
-  DIM DataOut(0 TO 7) AS EXTENDED
-  DIM DataCheck(0 TO 7) AS EXTENDED
+  DIM DataIn(0 TO 7) AS DOUBLE
+  DIM DataOut(0 TO 7) AS DOUBLE
+  DIM DataCheck(0 TO 7) AS DOUBLE
 
   TestString = "Testing MathHelper Class setup" + $CRLF
 
@@ -123,7 +123,7 @@ FUNCTION PBMAIN () AS LONG
     'ComplexToPolar
     a = MathHelper.ComplexNumber(4, -4)
     p = MathHelper.ComplexToPolar(a)
-    TestString += "  Testing ComplexToPolar : " + TestPolar(p, 5.656854249492380, -0.785398163397448310, 15)
+    TestString += "  Testing ComplexToPolar : " + TestPolar(p, 5.656854249492380, -0.785398163397448310, 14)
 
 
     'PolarToComplex
@@ -147,7 +147,7 @@ FUNCTION PBMAIN () AS LONG
     'ComplexPower
     a = MathHelper.ComplexNumber(2, 3)
     a = MathHelper.ComplexPower(a, 4)
-    TestString += "  Testing ComplexPower : " + TestComplex1(a, -119, -120, 16)
+    TestString += "  Testing ComplexPower : " + TestComplex1(a, -119, -120, 13)
 
 
     'ArcSin
@@ -176,8 +176,8 @@ FUNCTION PBMAIN () AS LONG
 
 
     'ArcCos
-    e = ROUND(MathHelper.ArcCos(COS(0.5)),17)
-    TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 17)
+    e = MathHelper.ArcCos(COS(0.5))
+    TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 15)
 
 
     'DCT
@@ -198,7 +198,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=11.1942153663612446
     DataCheck(6)=.831024961533054953
     DataCheck(7)=8.75951873558976203
-    TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
+    TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 14)
 
 
     'IDCT
@@ -219,7 +219,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=2
     DataCheck(6)=13
     DataCheck(7)=1
-    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
+    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 13)
 
 
     'Dot
@@ -262,7 +262,7 @@ FUNCTION PBMAIN () AS LONG
 END FUNCTION
 
 
-FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG) AS STRING
+FUNCTION ArrayToString(DataIn() AS DOUBLE, SizeOfArray AS LONG, Indent AS LONG) AS STRING
   LOCAL i AS LONG
   LOCAL StringOut AS STRING
 
@@ -274,7 +274,7 @@ FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG
 END FUNCTION
 
 
-FUNCTION TestExtended(test AS EXTENDED, expected AS EXTENDED, r AS LONG) AS STRING
+FUNCTION TestExtended(test AS DOUBLE, expected AS DOUBLE, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(test, r) = ROUND(expected, r) THEN
@@ -287,7 +287,7 @@ FUNCTION TestExtended(test AS EXTENDED, expected AS EXTENDED, r AS LONG) AS STRI
 END FUNCTION
 
 
-FUNCTION TestComplex1(z AS ComplexNumber, Real As EXTENDED, Img AS EXTENDED, r AS LONG) AS STRING
+FUNCTION TestComplex1(z AS ComplexNumber, Real As DOUBLE, Img AS DOUBLE, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(z.real,r) = ROUND(Real,r) AND ROUND(z.img,r) = ROUND(Img,r) THEN
@@ -301,7 +301,7 @@ FUNCTION TestComplex1(z AS ComplexNumber, Real As EXTENDED, Img AS EXTENDED, r A
 END FUNCTION
 
 
-FUNCTION TestPolar(p AS PolarNumber, Radius As EXTENDED, Radians AS EXTENDED, r AS LONG) AS STRING
+FUNCTION TestPolar(p AS PolarNumber, Radius As DOUBLE, Radians AS DOUBLE, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(p.Radius, r) = ROUND(Radius, r) AND ROUND(p.Radians, r) = ROUND(Radians, r) THEN
@@ -315,7 +315,7 @@ FUNCTION TestPolar(p AS PolarNumber, Radius As EXTENDED, Radians AS EXTENDED, r 
 END FUNCTION
 
 
-FUNCTION TestArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS STRING
+FUNCTION TestArray(a() AS DOUBLE, b() AS DOUBLE, l AS LONG, p AS LONG) AS STRING
   LOCAL i AS LONG
   LOCAL test AS LONG
   LOCAL Result AS STRING
@@ -335,7 +335,7 @@ FUNCTION TestArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS ST
 END FUNCTION
 
 
-FUNCTION TestQuaternion(s AS QuaternionNumber, r AS EXTENDED, i AS EXTENDED, j AS EXTENDED, k AS EXTENDED, precision AS LONG) AS STRING
+FUNCTION TestQuaternion(s AS QuaternionNumber, r AS DOUBLE, i AS DOUBLE, j AS DOUBLE, k AS DOUBLE, precision AS LONG) AS STRING
     LOCAL result AS STRING
     LOCAL test AS LONG
 
