@@ -4,7 +4,6 @@
 
 #COMPILE EXE
 #DIM ALL
-#UNIQUE VAR ON
 
 #INCLUDE ONCE "mathhelper.inc"
 
@@ -46,6 +45,11 @@ FUNCTION PBMAIN () AS LONG
     'Tau
     e = MathHelper.Tau()
     TestString += "  Testing Tau : " + TestExtended(e, 6.28318530717958647692528, 17)
+
+
+    'e
+    e = MathHelper.e()
+    TestString += "  Testing e : " + TestExtended(e, 2.71828182845904523536029, 17)
 
 
     'Set a Number
@@ -167,7 +171,7 @@ FUNCTION PBMAIN () AS LONG
 
     'CosH
     e = MathHelper.CosH(0.5)
-    TestString += "  Testing CosH : " + TestExtended(e, 1.04719755119659774, 17)
+    TestString += "  Testing CosH : " + TestExtended(e, 1.12762596520638078522, 17)
 
 
     'ArcCosH
@@ -219,7 +223,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=2
     DataCheck(6)=13
     DataCheck(7)=1
-    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 13)
+    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 14)
 
 
     'Dot

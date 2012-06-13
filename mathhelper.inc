@@ -2,8 +2,8 @@
 ' http://creativecommons.org/licenses/by/3.0/ or send a letter to
 ' Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
+'MathHelper.INC version 0.00.03
 #INCLUDE THIS ONCE
-'#REGISTER NONE  'Needed for bug in optimazation see: "http://www.powerbasic.com/support/pbforums/showthread.php?p=408285"
 
 TYPE ComplexNumber
   Real AS DOUBLE
@@ -23,13 +23,17 @@ TYPE QuaternionNumber
 END TYPE
 
 CLASS cMathHelper
-  INSTANCE Pi AS DOUBLE
-  INSTANCE Tau AS DOUBLE
+  INSTANCE HalfPi AS EXTENDED
+  INSTANCE Pi AS EXTENDED
+  INSTANCE Tau AS EXTENDED
+  INSTANCE e AS EXTENDED
 
 
   CLASS METHOD CREATE()
-    Pi = 3.14159265358979323846264
-    Tau = 6.28318530717958647692528
+    HalfPi  = 1.57079632679489661923132
+    Pi      = 3.14159265358979323846264
+    Tau     = 6.28318530717958647692528
+    e       = 2.71828182845904523536029
   END METHOD
 
   'Get the ArcTangent2 of x and y
@@ -41,9 +45,9 @@ CLASS cMathHelper
           IF y = 0 THEN
             result = 0
           ELSEIF y > 0 THEN
-              result = Pi / 2
+              result = HalfPi
           ELSE' y < 0
-              result = -Pi / 2
+              result = -HalfPi
           END IF
         CASE > 0: result = ATN(y/x)
         CASE < 0:
@@ -67,12 +71,19 @@ CLASS cMathHelper
     '       Constants
     '=======================
 
+
     PROPERTY GET Pi () AS DOUBLE
       PROPERTY = Pi
     END PROPERTY
 
+
     PROPERTY GET Tau () AS DOUBLE
       PROPERTY = Tau
+    END PROPERTY
+
+
+    PROPERTY GET e () AS DOUBLE
+      PROPERTY = e
     END PROPERTY
 
 
@@ -307,7 +318,7 @@ CLASS cMathHelper
     METHOD ArcCos(BYVAL IN a AS DOUBLE) AS DOUBLE
       LOCAL result AS DOUBLE
 
-      result = Pi / 2 - ATN(a / SQR(1 - a * a))
+      result = HalfPi - ATN(a / SQR(1 - a * a))
 
       METHOD = result
     END METHOD
@@ -315,9 +326,9 @@ CLASS cMathHelper
 
    'The CosH function
     METHOD CosH(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+      LOCAL result AS EXTENDED
 
-      result = Pi / 2 - ATN(a / SQR(1 - a * a))
+      result = ((e^a)+(e^-a)) / 2
 
       METHOD = result
     END METHOD
@@ -349,23 +360,27 @@ CLASS cMathHelper
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: DCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
     METHOD DCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
-      LOCAL k AS LONG
-      LOCAL n AS LONG
-      LOCAL Sum AS DOUBLE
-      LOCAL ScaledPi AS DOUBLE
-      LOCAL ScaleOut AS DOUBLE
+      REGISTER n AS LONG
+      REGISTER k AS LONG
+      REGISTER Sum AS EXTENDED
+      REGISTER ScaledPi AS EXTENDED
+      REGISTER ScaleOut AS EXTENDED
+
+      sum = 0
+      FOR n = 0 TO DCTSize
+          sum += @pDataIn[n]
+      NEXT n
+      @pDataOut[0] = sum * SQR( 1 /(DCTSize+1))
 
       ScaleOut =  SQR(2 /(DCTSize+1))
-
-      FOR k = 0 TO DCTSize
+      FOR k = 1 TO DCTSize
         sum = 0
-        ScaledPi = (me.pi * k) / (DCTSize + 1)
+        ScaledPi = (Pi * k) / (DCTSize + 1)
         FOR n = 0 TO DCTSize
           sum += @pDataIn[n] * COS(ScaledPi * (n + 0.5))
         NEXT n
         @pDataOut[k] = sum * ScaleOut
       NEXT k
-      @pDataOut[0] = (@pDataOut[0] / ScaleOut) * SQR( 1 /(DCTSize+1))
 
     END METHOD
 
@@ -379,13 +394,12 @@ CLASS cMathHelper
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: IDCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
     METHOD IDCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
-      LOCAL k AS LONG
-      LOCAL n AS LONG
-      LOCAL Sum AS DOUBLE
-      LOCAL p AS DOUBLE
-      LOCAL ScaleOut AS DOUBLE
-      LOCAL ScaleOut0 AS DOUBLE
-      LOCAL ScaledPi AS DOUBLE
+      REGISTER k AS LONG
+      REGISTER n AS LONG
+      REGISTER Sum AS EXTENDED
+      REGISTER ScaledPi AS EXTENDED
+      REGISTER ScaleOut AS EXTENDED
+      LOCAL ScaleOut0 AS EXTENDED
 
       ScaleOut =  SQR(2 /(DCTSize+1))
       ScaleOut0 =  (@pDataIn[0] * SQR(1 /(DCTSize+1))) / ScaleOut
@@ -397,14 +411,14 @@ CLASS cMathHelper
           sum += @pDataIn[k] * COS(ScaledPi * k)
         NEXT k
         sum = sum * ScaleOut
-        @pDataOut[n] = ROUND(sum,14)
+        @pDataOut[n] = sum
       NEXT n
 
     END METHOD
 
     'Returns the Dot product of Two Arrays of DOUBLE type
     METHOD Dot(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN DotSize AS LONG) AS DOUBLE
-      LOCAL Sum AS DOUBLE
+      LOCAL Sum AS EXTENDED
       LOCAL i AS LONG
 
       Sum = 0

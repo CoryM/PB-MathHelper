@@ -6,6 +6,20 @@ b Known Bug
 f Bug Fixed
 o Other
 
+0.00.03
+=======
+ + New PROPERTY e	: Returns the constant e (2.71828....)
+ b Correct the function and test of method CosH
+ o Changed Pi and Tau from a METHOD to a "PROPERTY GET"
+ - Changed from EXTENDED to DOUBLE percision float types for external interface.  
+    o #REGISTER NONE no longer needed
+    o ComplexToPolar .. Rounding of test changed from 15 to 14
+    o CompelexPower .. Rounding of test changed from 16 to 13
+    o ArcCos .. Rounding of test changed from 17 to 15
+    o DCT .. Rounding of test changed from 16 to 14
+    o iDCT .. Rounding of test changed from 16 to 14
+    o All other existing tests did not need to be adjusted.
+
 0.00.02
 =======
  + Added Changes.md                           : A change log. (This file)
