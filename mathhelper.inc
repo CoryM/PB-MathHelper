@@ -335,8 +335,8 @@ CLASS cMathHelper
 
 
     'The ArcCosH function
-    'If -1 <= a >= 1 then the result of SQR(a*a-1) is in the imaginary plane
-    ' To make complex version need to find out how to do a ???LOG of a complex number???
+    'If  abs(a) < 1 then the result of SQR(a*a-1) is in the imaginary plane
+    ' To make complex number version, need to find out how to do a ???LOG of a complex number???
     METHOD ArcCosH(BYVAL IN a AS DOUBLE) AS DOUBLE
       LOCAL result AS DOUBLE
 
