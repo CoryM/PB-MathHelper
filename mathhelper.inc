@@ -429,6 +429,37 @@ CLASS cMathHelper
       METHOD = Sum
     END METHOD
 
+    METHOD PearsonCorrelationCoefficient(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG) AS DOUBLE
+      LOCAL i AS LONG
+      LOCAL Average1, Average2 AS DOUBLE
+      LOCAL Dif1, Dif2 AS DOUBLE
+      LOCAL Sum AS DOUBLE
+      LOCAL Sqr1, Sqr2 AS DOUBLE
+      LOCAL Result AS DOUBLE
+
+      Average1 = 0
+      Average2 = 0
+      FOR i = 0 TO ArraySize
+        Average1 += @pIn1[i]
+        Average2 += @pIn2[i]
+      NEXT i
+      Average1 = Average1 / (ArraySize + 1)
+      Average2 = Average2 / (ArraySize + 1)
+
+
+      FOR i = 0 TO ArraySize
+        Dif1 = @pIn1[i] - Average1
+        Dif2 = @pIn2[i] - Average2
+        Sum += Dif1 * Dif2
+        Sqr1 += Dif1 * Dif1
+        Sqr2 += Dif2 * Dif2
+      NEXT i
+
+      Result = Sum / SQR(Sqr1 * Sqr2)
+
+      METHOD = Result
+    END METHOD
+
 
   END INTERFACE
 END CLASS

@@ -258,10 +258,25 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.QuatNorm(q)
     TestString += "  Testing QuatNorm : " + TestExtended(e, 13.1909059582729192, 16)
 
+    DataIn(0) = 1
+    DataIn(1) = 1
+    DataIn(2) = 2
+    DataIn(3) = 3
+    DataIn(4) = 5
+    DataIn(5) = 8
+    DataIn(6) = 13
+    DataIn(7) = 21
+    e = MathHelper.PearsonCorrelationCoefficient(VARPTR(DataIn(0)), VARPTR(DataIn(4)), 3)
+    TestString += "  Testing Pearson Correlation Coefficient : " + TestExtended(e, 0.983131696405106, 15)
+
+
   END IF
 
   'Show the results
   MSGBOX TestString
+
+
+
 
 END FUNCTION
 
