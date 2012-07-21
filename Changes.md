@@ -6,6 +6,12 @@ b Known Bug
 f Bug Fixed
 o Other
 
+0.00.04
+=======
+ + New METHOD PearsonCorrelationCoefficient(X[], Y[], ArraySize)	: Returns the Pearson's Correlation Coefficient of data array pairs in X and Y
+ + New METHOD Rank(In[], Out[], ArraySize)							: Ranking method as defined by Spearman's Rank Correlation Coefficient
+ + New METHOD SpearmansRho(X[], Y[], ArraySize)						: Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
+
 0.00.03
 =======
  + New PROPERTY e	: Returns the constant e (2.71828....)

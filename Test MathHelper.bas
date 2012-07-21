@@ -25,7 +25,7 @@ FUNCTION PBMAIN () AS LONG
 
   LOCAL TestString AS STRING
 
-  DIM DataIn(0 TO 7) AS DOUBLE
+  DIM DataIn(0 TO 19) AS DOUBLE
   DIM DataOut(0 TO 7) AS DOUBLE
   DIM DataCheck(0 TO 7) AS DOUBLE
 
@@ -258,6 +258,7 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.QuatNorm(q)
     TestString += "  Testing QuatNorm : " + TestExtended(e, 13.1909059582729192, 16)
 
+    'Pearson Correlation Coefficient
     DataIn(0) = 1
     DataIn(1) = 1
     DataIn(2) = 2
@@ -268,6 +269,53 @@ FUNCTION PBMAIN () AS LONG
     DataIn(7) = 21
     e = MathHelper.PearsonCorrelationCoefficient(VARPTR(DataIn(0)), VARPTR(DataIn(4)), 3)
     TestString += "  Testing Pearson Correlation Coefficient : " + TestExtended(e, 0.983131696405106, 15)
+
+    'Rank
+    DataIn(0) = 6
+    DataIn(1) = 9
+    DataIn(2) = 3
+    DataIn(3) = 6
+    DataIn(4) = 5
+    DataIn(5) = 1
+    DataIn(6) = 3
+    DataIn(7) = 8
+    MathHelper.Rank(VARPTR(DataIn(0)), VARPTR(DataOut(0)), 7)
+    DataCheck(0)=5.5
+    DataCheck(1)=8
+    DataCheck(2)=2.5
+    DataCheck(3)=5.5
+    DataCheck(4)=4
+    DataCheck(5)=1
+    DataCheck(6)=2.5
+    DataCheck(7)=7
+    TestString += "  Testing Rank : " + TestArray(DataOut(), DataCheck(), 7, 14)
+
+    'Spearmans Rho
+    'X()
+    DataIn(0) = 86
+    DataIn(1) = 97
+    DataIn(2) = 99
+    DataIn(3) = 100
+    DataIn(4) = 101
+    DataIn(5) = 103
+    DataIn(6) = 106
+    DataIn(7) = 110
+    DataIn(8) = 112
+    DataIn(9) = 113
+    Y()
+    DataIn(10) = 0
+    DataIn(11) = 20
+    DataIn(12) = 28
+    DataIn(13) = 27
+    DataIn(14) = 50
+    DataIn(15) = 29
+    DataIn(16) = 7
+    DataIn(17) = 17
+    DataIn(18) = 6
+    DataIn(19) = 12
+    e = MathHelper.SpearmansRho(VARPTR(DataIn(0)), VARPTR(DataIn(10)), 9)
+    TestString += "  Testing Spearmans Rho : " + TestExtended(e, -0.17575757575757575, 17)
+
 
 
   END IF

@@ -416,6 +416,7 @@ CLASS cMathHelper
 
     END METHOD
 
+
     'Returns the Dot product of Two Arrays of DOUBLE type
     METHOD Dot(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN DotSize AS LONG) AS DOUBLE
       LOCAL Sum AS EXTENDED
@@ -429,6 +430,8 @@ CLASS cMathHelper
       METHOD = Sum
     END METHOD
 
+    'Pearson Correlation Coefficient
+    'Source http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
     METHOD PearsonCorrelationCoefficient(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG) AS DOUBLE
       LOCAL i AS LONG
       LOCAL Average1, Average2 AS DOUBLE
@@ -458,6 +461,74 @@ CLASS cMathHelper
       Result = Sum / SQR(Sqr1 * Sqr2)
 
       METHOD = Result
+    END METHOD
+
+
+    'Spearman's rank method
+    'Used for Spearman's rho ("Spearman's rank correlation coefficient")
+    'Source http://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
+    METHOD Rank(BYVAL IN pIn AS DOUBLE POINTER, BYVAL IN pOut AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG)
+      LOCAL i, j AS LONG
+      LOCAL Sum, Runlength AS LONG
+      LOCAL CheckValue AS DOUBLE
+      LOCAL Average AS DOUBLE
+
+      DIM SortedArray(ArraySize) AS DOUBLE
+      DIM Tag(ArraySize) AS LONG
+
+      FOR i = 0 TO ArraySize
+        SortedArray(i) = @pIn[i]
+        Tag(i) = i
+      NEXT i
+
+      ARRAY SORT SortedArray(), TAGARRAY Tag(), ASCEND
+
+      FOR i = 0 TO ArraySize
+        CheckValue = SortedArray(i)
+        Sum = i+1
+        RunLength = 1
+        FOR j = i+1 TO ArraySize
+          IF SortedArray(j) = CheckValue THEN
+            Runlength += 1
+            Sum += j+1
+          ELSE
+            EXIT FOR
+          END IF
+        NEXT j
+
+        Average = Sum / Runlength
+
+        FOR j = i TO i + RunLength - 1
+          @pOut[Tag(j)] = Average
+        NEXT j
+        i = i + RunLength - 1
+      NEXT i
+
+      ERASE SortedArray()
+      ERASE Tag()
+
+
+    END METHOD
+
+
+    'Spearman's rho ("Spearman's rank correlation coefficient")
+    'Source http://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
+    METHOD SpearmansRho(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG) AS DOUBLE
+      LOCAL i AS LONG
+      LOCAL result AS DOUBLE
+
+      DIM X(ArraySize) AS DOUBLE
+      DIM Y(ArraySize) AS DOUBLE
+
+      Me.Rank(pIn1, VARPTR(X(0)), ArraySize)
+      Me.Rank(pIn2, VARPTR(Y(0)), ArraySize)
+
+      Result = Me.PearsonCorrelationCoefficient(VARPTR(X(0)), VARPTR(Y(0)), ArraySize)
+
+      ERASE X(), Y()
+
+      METHOD = Result
+
     END METHOD
 
 
