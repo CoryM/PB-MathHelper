@@ -11,6 +11,16 @@ o Other
  + New METHOD PearsonCorrelationCoefficient(X[], Y[], ArraySize)	: Returns the Pearson's Correlation Coefficient of data array pairs in X and Y
  + New METHOD Rank(In[], Out[], ArraySize)							: Ranking method as defined by Spearman's Rank Correlation Coefficient
  + New METHOD SpearmansRho(X[], Y[], ArraySize)						: Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
+ + New METHOD BBP(MaxK) 											: Return the Bailey–Borwein–Plouffe formula for Pi
+ o Changed IUNKNOWN to IAUTOMATION to work around the issues with passing EXTENDED persion values
+	o Changed all DOUBLES to EXTENDED persion
+	o ComplexToPolar .. Rounding of test changed from 14 to 15
+    o CompelexPower .. Rounding of test changed from 13 to 16
+    o ArcCos .. Rounding of test changed from 15 to 16
+    o DCT .. Rounding of test changed from 14 to 16
+    o iDCT .. Rounding of test changed from 14 to 15
+    o All other existing tests did not need to be adjusted.
+ 
 
 0.00.03
 =======

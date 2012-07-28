@@ -6,20 +6,20 @@
 #INCLUDE THIS ONCE
 
 TYPE ComplexNumber
-  Real AS DOUBLE
-  Img AS DOUBLE
+  Real AS EXTENDED
+  Img AS EXTENDED
 END TYPE
 
 TYPE PolarNumber
-  radius AS DOUBLE
-  radians AS DOUBLE
+  radius AS EXTENDED
+  radians AS EXTENDED
 END TYPE
 
 TYPE QuaternionNumber
-  r AS DOUBLE
-  i AS DOUBLE
-  j AS DOUBLE
-  k AS DOUBLE
+  r AS EXTENDED
+  i AS EXTENDED
+  j AS EXTENDED
+  k AS EXTENDED
 END TYPE
 
 CLASS cMathHelper
@@ -64,7 +64,7 @@ CLASS cMathHelper
 
   INTERFACE iMathHelper
 
-    INHERIT IUNKNOWN
+    INHERIT IAUTOMATION
 
 
     '=======================
@@ -72,7 +72,7 @@ CLASS cMathHelper
     '=======================
 
 
-    PROPERTY GET Pi () AS DOUBLE
+    PROPERTY GET Pi () AS EXTENDED
       PROPERTY = Pi
     END PROPERTY
 
@@ -97,12 +97,12 @@ CLASS cMathHelper
     END METHOD
 
 
-    PROPERTY GET Tau () AS DOUBLE
+    PROPERTY GET Tau () AS EXTENDED
       PROPERTY = Tau
     END PROPERTY
 
 
-    PROPERTY GET e () AS DOUBLE
+    PROPERTY GET e () AS EXTENDED
       PROPERTY = e
     END PROPERTY
 
@@ -113,7 +113,7 @@ CLASS cMathHelper
 
 
     'Helps set a complex number
-    METHOD ComplexNumber(BYVAL IN r AS DOUBLE,BYVAL IN i AS DOUBLE) AS ComplexNumber
+    METHOD ComplexNumber(BYVAL IN r AS EXTENDED,BYVAL IN i AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
       z.real = r
       z.img = i
@@ -122,7 +122,7 @@ CLASS cMathHelper
 
 
     'Helps set a Polar number
-    METHOD PolarNumber(BYVAL IN radius AS DOUBLE, BYVAL IN radians AS DOUBLE) AS PolarNumber
+    METHOD PolarNumber(BYVAL IN radius AS EXTENDED, BYVAL IN radians AS EXTENDED) AS PolarNumber
       LOCAL p AS polarNumber
 
       p.radius = radius
@@ -171,7 +171,7 @@ CLASS cMathHelper
     'Divide complex numbers z1 by z2
     METHOD ComplexDivide(BYVAL IN z1 AS ComplexNumber, BYVAL IN z2 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
-      LOCAL d AS DOUBLE
+      LOCAL d AS EXTENDED
       d = (z2.real * z2.real) + (z2.img * z2.img)
 
       z.real = ((z1.real * z2.real) + (z1.img  * z2.img)) / d
@@ -183,7 +183,7 @@ CLASS cMathHelper
     'Get the SquareRoot of a complex number
     METHOD ComplexSquareRoot(BYVAL IN z1 AS ComplexNumber) AS ComplexNumber
       LOCAL z AS ComplexNumber
-      LOCAL d AS DOUBLE
+      LOCAL d AS EXTENDED
       d = SQR((z1.real * z1.real) + (z1.img * z1.img))
 
       z.real = SQR((z1.real + d)/2)
@@ -194,7 +194,7 @@ CLASS cMathHelper
 
 
     'Raise a complex number in Polar form by a arbitrary power.
-    METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS DOUBLE) AS PolarNumber
+    METHOD PolarPower(BYVAL IN p1 AS PolarNumber, Power AS EXTENDED) AS PolarNumber
       LOCAL p AS PolarNumber
 
       p = p1
@@ -206,7 +206,7 @@ CLASS cMathHelper
 
 
     'Raise a complex number by a arbitrary power.
-    METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS DOUBLE) AS ComplexNumber
+    METHOD ComplexPower(BYVAL IN z1 AS ComplexNumber, Power AS EXTENDED) AS ComplexNumber
       LOCAL z AS ComplexNumber
       LOCAL p AS PolarNumber
 
@@ -240,8 +240,8 @@ CLASS cMathHelper
 
 
     'Get the ArcTangent2 of x and y
-    METHOD ATAN2(BYVAL IN x AS DOUBLE, BYVAL IN y AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD ATAN2(BYVAL IN x AS EXTENDED, BYVAL IN y AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       'Function moved to internal CLASS level function
       result = Me.ExtendedAtan2(x, y)
@@ -255,7 +255,7 @@ CLASS cMathHelper
     '===================================
 
 
-    METHOD QuaternionNumber(BYVAL IN r AS DOUBLE, BYVAL IN i AS DOUBLE, BYVAL IN j AS DOUBLE, BYVAL IN k AS DOUBLE) AS QuaternionNumber
+    METHOD QuaternionNumber(BYVAL IN r AS EXTENDED, BYVAL IN i AS EXTENDED, BYVAL IN j AS EXTENDED, BYVAL IN k AS EXTENDED) AS QuaternionNumber
       LOCAL Result AS QuaternionNumber
 
       Result.r = r
@@ -290,8 +290,8 @@ CLASS cMathHelper
     END METHOD
 
 
-    METHOD QuatNorm(BYVAL IN a AS QuaternionNumber) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD QuatNorm(BYVAL IN a AS QuaternionNumber) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       Result = SQR((a.r * a.r) + (a.i * a.i) + (a.j * a.j) + (a.k * a.k))
 
@@ -305,8 +305,8 @@ CLASS cMathHelper
 
 
     'The ArcSin function
-    METHOD ArcSin(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD ArcSin(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       result = ATN(a / SQR(1 - a * a))
 
@@ -315,8 +315,8 @@ CLASS cMathHelper
 
 
     'The SinH function
-    METHOD SinH(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD SinH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       result = (EXP(a) - EXP(-a)) / 2
 
@@ -325,8 +325,8 @@ CLASS cMathHelper
 
 
     'The ArcSinH function
-    METHOD ArcSinH(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD ArcSinH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       result = LOG(a + SQR(a * a + 1))
 
@@ -335,8 +335,8 @@ CLASS cMathHelper
 
 
     'The ArcCos Function
-    METHOD ArcCos(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD ArcCos(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       result = HalfPi - ATN(a / SQR(1 - a * a))
 
@@ -345,7 +345,7 @@ CLASS cMathHelper
 
 
    'The CosH function
-    METHOD CosH(BYVAL IN a AS DOUBLE) AS DOUBLE
+    METHOD CosH(BYVAL IN a AS EXTENDED) AS EXTENDED
       LOCAL result AS EXTENDED
 
       result = ((e^a)+(e^-a)) / 2
@@ -357,8 +357,8 @@ CLASS cMathHelper
     'The ArcCosH function
     'If  abs(a) < 1 then the result of SQR(a*a-1) is in the imaginary plane
     ' To make complex number version, need to find out how to do a ???LOG of a complex number???
-    METHOD ArcCosH(BYVAL IN a AS DOUBLE) AS DOUBLE
-      LOCAL result AS DOUBLE
+    METHOD ArcCosH(BYVAL IN a AS EXTENDED) AS EXTENDED
+      LOCAL result AS EXTENDED
 
       result = LOG(a + SQR(a * a - 1))
 
@@ -372,14 +372,14 @@ CLASS cMathHelper
     '===================================
 
     'The discrete cosine transform.
-    '  pDataIn   A pointer to the source array of DOUBLE data type.
-    '  pDataOut  A pointer to the destination array of DOUBLE data type.
+    '  pDataIn   A pointer to the source array of EXTENDED data type.
+    '  pDataOut  A pointer to the destination array of EXTENDED data type.
     '  DCTSize   Size of the array that you want to transform including 0.
     '
     'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: DCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
-    METHOD DCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
+    METHOD DCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
       REGISTER n AS LONG
       REGISTER k AS LONG
       REGISTER Sum AS EXTENDED
@@ -406,14 +406,14 @@ CLASS cMathHelper
 
 
     'The inverse discrete cosine transform.
-    '  pDataIn   A pointer to the source array of DOUBLE data type.
-    '  pDataOut  A pointer to the destination array of DOUBLE data type.
+    '  pDataIn   A pointer to the source array of EXTENDED data type.
+    '  pDataOut  A pointer to the destination array of EXTENDED data type.
     '  DCTSize   Size of the array that you want to transform including 0.
     '
     'Note pDataIn and pDataOut are POINTERS and need to be giving the memory
     'address of the array.  Example to transform source to destination using a
     'DCT of 8 values use: IDCT(VARPTR(Source(0)), VARPTR(Destination(0)), 7)
-    METHOD IDCT(BYVAL IN pDataIn AS DOUBLE POINTER, BYVAL IN pDataOut AS DOUBLE POINTER, BYVAL IN DCTSize AS LONG)
+    METHOD IDCT(BYVAL IN pDataIn AS EXTENDED POINTER, BYVAL IN pDataOut AS EXTENDED POINTER, BYVAL IN DCTSize AS LONG)
       REGISTER k AS LONG
       REGISTER n AS LONG
       REGISTER Sum AS EXTENDED
@@ -437,8 +437,8 @@ CLASS cMathHelper
     END METHOD
 
 
-    'Returns the Dot product of Two Arrays of DOUBLE type
-    METHOD Dot(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN DotSize AS LONG) AS DOUBLE
+    'Returns the Dot product of Two Arrays of EXTENDED type
+    METHOD Dot(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN DotSize AS LONG) AS EXTENDED
       LOCAL Sum AS EXTENDED
       LOCAL i AS LONG
 
@@ -452,13 +452,13 @@ CLASS cMathHelper
 
     'Pearson Correlation Coefficient
     'Source http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
-    METHOD PearsonCorrelationCoefficient(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG) AS DOUBLE
+    METHOD PearsonCorrelationCoefficient(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG) AS EXTENDED
       LOCAL i AS LONG
-      LOCAL Average1, Average2 AS DOUBLE
-      LOCAL Dif1, Dif2 AS DOUBLE
-      LOCAL Sum AS DOUBLE
-      LOCAL Sqr1, Sqr2 AS DOUBLE
-      LOCAL Result AS DOUBLE
+      LOCAL Average1, Average2 AS EXTENDED
+      LOCAL Dif1, Dif2 AS EXTENDED
+      LOCAL Sum AS EXTENDED
+      LOCAL Sqr1, Sqr2 AS EXTENDED
+      LOCAL Result AS EXTENDED
 
       Average1 = 0
       Average2 = 0
@@ -487,13 +487,13 @@ CLASS cMathHelper
     'Spearman's rank method
     'Used for Spearman's rho ("Spearman's rank correlation coefficient")
     'Source http://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
-    METHOD Rank(BYVAL IN pIn AS DOUBLE POINTER, BYVAL IN pOut AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG)
+    METHOD Rank(BYVAL IN pIn AS EXTENDED POINTER, BYVAL IN pOut AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG)
       LOCAL i, j AS LONG
       LOCAL Sum, Runlength AS LONG
-      LOCAL CheckValue AS DOUBLE
-      LOCAL Average AS DOUBLE
+      LOCAL CheckValue AS EXTENDED
+      LOCAL Average AS EXTENDED
 
-      DIM SortedArray(ArraySize) AS DOUBLE
+      DIM SortedArray(ArraySize) AS EXTENDED
       DIM Tag(ArraySize) AS LONG
 
       FOR i = 0 TO ArraySize
@@ -533,12 +533,12 @@ CLASS cMathHelper
 
     'Spearman's rho ("Spearman's rank correlation coefficient")
     'Source http://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
-    METHOD SpearmansRho(BYVAL IN pIn1 AS DOUBLE POINTER, BYVAL IN pIn2 AS DOUBLE POINTER, BYVAL IN ArraySize AS LONG) AS DOUBLE
+    METHOD SpearmansRho(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN pIn2 AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG) AS EXTENDED
       LOCAL i AS LONG
-      LOCAL result AS DOUBLE
+      LOCAL result AS EXTENDED
 
-      DIM X(ArraySize) AS DOUBLE
-      DIM Y(ArraySize) AS DOUBLE
+      DIM X(ArraySize) AS EXTENDED
+      DIM Y(ArraySize) AS EXTENDED
 
       Me.Rank(pIn1, VARPTR(X(0)), ArraySize)
       Me.Rank(pIn2, VARPTR(Y(0)), ArraySize)
