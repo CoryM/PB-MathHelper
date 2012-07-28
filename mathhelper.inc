@@ -77,6 +77,26 @@ CLASS cMathHelper
     END PROPERTY
 
 
+    'Bailey–Borwein–Plouffe formula for calculating pi
+    'http://en.wikipedia.org/wiki/Bailey-Borwein-Plouffe_formula
+    METHOD BBP(BYVAL IN MaxK AS LONG) AS EXTENDED
+      LOCAL k AS LONG
+      LOCAL Sum AS EXTENDED
+      LOCAL Product AS EXTENDED
+
+      FOR k = 0 TO MaxK
+        Product = 4 / ((8 * k) + 1)
+        Product -= 2 / ((8 * k) + 4)
+        Product -= 1 / ((8 * k) + 5)
+        Product -= 1 / ((8 * k) + 6)
+        Product /= 16 ^ k
+        Sum += Product
+      NEXT k
+
+      METHOD = Sum
+    END METHOD
+
+
     PROPERTY GET Tau () AS DOUBLE
       PROPERTY = Tau
     END PROPERTY

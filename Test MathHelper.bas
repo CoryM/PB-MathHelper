@@ -302,7 +302,7 @@ FUNCTION PBMAIN () AS LONG
     DataIn(7) = 110
     DataIn(8) = 112
     DataIn(9) = 113
-    Y()
+    'Y()
     DataIn(10) = 0
     DataIn(11) = 20
     DataIn(12) = 28
@@ -316,7 +316,8 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.SpearmansRho(VARPTR(DataIn(0)), VARPTR(DataIn(10)), 9)
     TestString += "  Testing Spearmans Rho : " + TestExtended(e, -0.17575757575757575, 17)
 
-
+    e = MathHelper.BBP(11)
+    TestString += "  Testing Pi2 : " + TestExtended(e, 3.14159265358979323846264, 17)
 
   END IF
 
