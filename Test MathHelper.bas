@@ -14,20 +14,20 @@ FUNCTION PBMAIN () AS LONG
   LOCAL a AS ComplexNumber
   LOCAL b AS ComplexNumber
   LOCAL z AS ComplexNumber
-  LOCAL e AS DOUBLE
-  LOCAL f AS DOUBLE
+  LOCAL e AS EXTENDED
+  LOCAL f AS EXTENDED
   LOCAL o AS PolarNumber
   LOCAL p AS PolarNumber
   LOCAL q AS QuaternionNumber
   LOCAL r AS QuaternionNumber
   LOCAL s AS QuaternionNumber
-  LOCAL DataIn(), DataOut(), DataCheck() AS DOUBLE
+  LOCAL DataIn(), DataOut(), DataCheck() AS EXTENDED
 
   LOCAL TestString AS STRING
 
-  DIM DataIn(0 TO 19) AS DOUBLE
-  DIM DataOut(0 TO 7) AS DOUBLE
-  DIM DataCheck(0 TO 7) AS DOUBLE
+  DIM DataIn(0 TO 19) AS EXTENDED
+  DIM DataOut(0 TO 7) AS EXTENDED
+  DIM DataCheck(0 TO 7) AS EXTENDED
 
   TestString = "Testing MathHelper Class setup" + $CRLF
 
@@ -127,7 +127,7 @@ FUNCTION PBMAIN () AS LONG
     'ComplexToPolar
     a = MathHelper.ComplexNumber(4, -4)
     p = MathHelper.ComplexToPolar(a)
-    TestString += "  Testing ComplexToPolar : " + TestPolar(p, 5.656854249492380, -0.785398163397448310, 14)
+    TestString += "  Testing ComplexToPolar : " + TestPolar(p, 5.656854249492380, -0.785398163397448310, 15)
 
 
     'PolarToComplex
@@ -151,7 +151,7 @@ FUNCTION PBMAIN () AS LONG
     'ComplexPower
     a = MathHelper.ComplexNumber(2, 3)
     a = MathHelper.ComplexPower(a, 4)
-    TestString += "  Testing ComplexPower : " + TestComplex1(a, -119, -120, 13)
+    TestString += "  Testing ComplexPower : " + TestComplex1(a, -119, -120, 16)
 
 
     'ArcSin
@@ -181,7 +181,7 @@ FUNCTION PBMAIN () AS LONG
 
     'ArcCos
     e = MathHelper.ArcCos(COS(0.5))
-    TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 15)
+    TestString += "  Testing ArcCos : " + TestExtended(e, 0.5, 16)
 
 
     'DCT
@@ -202,7 +202,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=11.1942153663612446
     DataCheck(6)=.831024961533054953
     DataCheck(7)=8.75951873558976203
-    TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 14)
+    TestString += "  Testing DCT : " + TestArray(DataOut(), DataCheck(), 7, 16)
 
 
     'IDCT
@@ -223,7 +223,7 @@ FUNCTION PBMAIN () AS LONG
     DataCheck(5)=2
     DataCheck(6)=13
     DataCheck(7)=1
-    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 14)
+    TestString += "  Testing IDCT : " + TestArray(DataOut(), DataCheck(), 7, 15)
 
 
     'Dot
@@ -302,7 +302,7 @@ FUNCTION PBMAIN () AS LONG
     DataIn(7) = 110
     DataIn(8) = 112
     DataIn(9) = 113
-    Y()
+    'Y()
     DataIn(10) = 0
     DataIn(11) = 20
     DataIn(12) = 28
@@ -314,9 +314,10 @@ FUNCTION PBMAIN () AS LONG
     DataIn(18) = 6
     DataIn(19) = 12
     e = MathHelper.SpearmansRho(VARPTR(DataIn(0)), VARPTR(DataIn(10)), 9)
-    TestString += "  Testing Spearmans Rho : " + TestExtended(e, -0.17575757575757575, 17)
+    TestString += "  Testing Spearmans Rho : " + TestExtended(e, -0.175757575757575757, 17)
 
-
+    e = MathHelper.BBP(11)
+    TestString += "  Testing Pi2 : " + TestExtended(e, 3.14159265358979323846264, 17)
 
   END IF
 
@@ -329,7 +330,7 @@ FUNCTION PBMAIN () AS LONG
 END FUNCTION
 
 
-FUNCTION ArrayToString(DataIn() AS DOUBLE, SizeOfArray AS LONG, Indent AS LONG) AS STRING
+FUNCTION ArrayToString(DataIn() AS EXTENDED, SizeOfArray AS LONG, Indent AS LONG) AS STRING
   LOCAL i AS LONG
   LOCAL StringOut AS STRING
 
@@ -341,7 +342,7 @@ FUNCTION ArrayToString(DataIn() AS DOUBLE, SizeOfArray AS LONG, Indent AS LONG) 
 END FUNCTION
 
 
-FUNCTION TestExtended(test AS DOUBLE, expected AS DOUBLE, r AS LONG) AS STRING
+FUNCTION TestExtended(test AS EXTENDED, expected AS EXTENDED, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(test, r) = ROUND(expected, r) THEN
@@ -354,7 +355,7 @@ FUNCTION TestExtended(test AS DOUBLE, expected AS DOUBLE, r AS LONG) AS STRING
 END FUNCTION
 
 
-FUNCTION TestComplex1(z AS ComplexNumber, Real As DOUBLE, Img AS DOUBLE, r AS LONG) AS STRING
+FUNCTION TestComplex1(z AS ComplexNumber, Real As EXTENDED, Img AS EXTENDED, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(z.real,r) = ROUND(Real,r) AND ROUND(z.img,r) = ROUND(Img,r) THEN
@@ -368,7 +369,7 @@ FUNCTION TestComplex1(z AS ComplexNumber, Real As DOUBLE, Img AS DOUBLE, r AS LO
 END FUNCTION
 
 
-FUNCTION TestPolar(p AS PolarNumber, Radius As DOUBLE, Radians AS DOUBLE, r AS LONG) AS STRING
+FUNCTION TestPolar(p AS PolarNumber, Radius As EXTENDED, Radians AS EXTENDED, r AS LONG) AS STRING
   LOCAL result AS STRING
 
   IF ROUND(p.Radius, r) = ROUND(Radius, r) AND ROUND(p.Radians, r) = ROUND(Radians, r) THEN
@@ -382,7 +383,7 @@ FUNCTION TestPolar(p AS PolarNumber, Radius As DOUBLE, Radians AS DOUBLE, r AS L
 END FUNCTION
 
 
-FUNCTION TestArray(a() AS DOUBLE, b() AS DOUBLE, l AS LONG, p AS LONG) AS STRING
+FUNCTION TestArray(a() AS EXTENDED, b() AS EXTENDED, l AS LONG, p AS LONG) AS STRING
   LOCAL i AS LONG
   LOCAL test AS LONG
   LOCAL Result AS STRING
@@ -402,7 +403,7 @@ FUNCTION TestArray(a() AS DOUBLE, b() AS DOUBLE, l AS LONG, p AS LONG) AS STRING
 END FUNCTION
 
 
-FUNCTION TestQuaternion(s AS QuaternionNumber, r AS DOUBLE, i AS DOUBLE, j AS DOUBLE, k AS DOUBLE, precision AS LONG) AS STRING
+FUNCTION TestQuaternion(s AS QuaternionNumber, r AS EXTENDED, i AS EXTENDED, j AS EXTENDED, k AS EXTENDED, precision AS LONG) AS STRING
     LOCAL result AS STRING
     LOCAL test AS LONG
 
