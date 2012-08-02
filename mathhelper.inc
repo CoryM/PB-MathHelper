@@ -2,7 +2,7 @@
 ' http://creativecommons.org/licenses/by/3.0/ or send a letter to
 ' Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
-'MathHelper.INC version 0.00.03
+'MathHelper.INC version 0.00.04
 #INCLUDE THIS ONCE
 
 TYPE ComplexNumber
