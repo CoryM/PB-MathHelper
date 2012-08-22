@@ -23,6 +23,7 @@ FUNCTION PBMAIN () AS LONG
   LOCAL s AS QuaternionNumber
   LOCAL DataIn(), DataOut(), DataCheck() AS EXTENDED
 
+  LOCAL ReportFile AS DWORD
   LOCAL TestString AS STRING
 
   DIM DataIn(0 TO 19) AS EXTENDED
@@ -341,12 +342,27 @@ FUNCTION PBMAIN () AS LONG
     DataIn(6) = 7
     DataIn(7) = 9
     e = MathHelper.Average(VARPTR(DataIn(0)), 7)
-    TestString += "  Testing Sum : " + TestExtended(e, 5, 17)
+    TestString += "  Testing Average : " + TestExtended(e, 5, 17)
+
+    'Sum of the Square values in an array
+    DataIn(0) = 2
+    DataIn(1) = 4
+    DataIn(2) = 4
+    DataIn(3) = 4
+    DataIn(4) = 5
+    DataIn(5) = 5
+    DataIn(6) = 7
+    DataIn(7) = 9
+    e = MathHelper.SquareSum(VARPTR(DataIn(0)), 7)
+    TestString += "  Testing SquareSum : " + TestExtended(e, 232, 17)
 
   END IF
 
   'Show the results
-  MSGBOX TestString
+  ReportFile = FREEFILE
+  OPEN "MathHelper Test Results.txt" FOR OUTPUT AS #ReportFile
+  PRINT #ReportFile, TestString
+  CLOSE #ReportFile
 
 
 

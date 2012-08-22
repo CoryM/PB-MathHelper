@@ -574,6 +574,18 @@ CLASS cMathHelper
       METHOD = result
     END METHOD
 
+    'Return the Sum of the Square Values in an array value of an array.
+    METHOD SquareSum(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG) AS EXTENDED
+      LOCAL i AS LONG
+      LOCAL SquareSum AS EXTENDED
+
+      FOR i = 0 TO ArraySize
+        SquareSum += @pIn1[i] ^ 2
+      NEXT i
+
+      METHOD = SquareSum
+    END METHOD
+
 
   END INTERFACE
 END CLASS
