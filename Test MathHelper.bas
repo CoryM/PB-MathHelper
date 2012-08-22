@@ -331,6 +331,18 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.Sum(VARPTR(DataIn(0)), 7)
     TestString += "  Testing Sum : " + TestExtended(e, 40, 17)
 
+    'Average an array
+    DataIn(0) = 2
+    DataIn(1) = 4
+    DataIn(2) = 4
+    DataIn(3) = 4
+    DataIn(4) = 5
+    DataIn(5) = 5
+    DataIn(6) = 7
+    DataIn(7) = 9
+    e = MathHelper.Average(VARPTR(DataIn(0)), 7)
+    TestString += "  Testing Sum : " + TestExtended(e, 5, 17)
+
   END IF
 
   'Show the results

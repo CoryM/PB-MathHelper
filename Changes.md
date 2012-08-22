@@ -13,6 +13,7 @@ o Other
  + New METHOD SpearmansRho(X[], Y[], ArraySize)						: Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
  + New METHOD BBP(MaxK) 											: Return the Bailey–Borwein–Plouffe formula for Pi
  + New METHOD Sum(In[], ArraySize)									: Returns the sum of an array.
+ + New METHOD Average(In[], ArraySize)								: Returns the average of an array.
  o Changed IUNKNOWN to IAUTOMATION to work around the issues with passing EXTENDED persion values
 	o Changed all DOUBLES back to EXTENDED persion
 	o ComplexToPolar .. Rounding of test changed from 14 to 15
