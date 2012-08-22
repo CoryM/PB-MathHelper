@@ -586,6 +586,21 @@ CLASS cMathHelper
       METHOD = SquareSum
     END METHOD
 
+    'Return the Population Standard Deviation in an array value of an array.
+    'Refrence http://en.wikipedia.org/wiki/Standard_deviation
+    METHOD PopulationStandardDeviation(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG) AS EXTENDED
+      LOCAL i AS LONG
+      LOCAL SquareSum AS EXTENDED
+      LOCAL Average AS EXTENDED
+      LOCAL Result AS EXTENDED
+
+      Average = me.Average(pIn1,ArraySize)
+      SquareSum = me.SquareSum(pIN1, ArraySize)
+      Result = SQR((SquareSum - (Average * Average * (ArraySize+1))) / (ArraySize+1))
+
+      METHOD = Result
+    END METHOD
+
 
   END INTERFACE
 END CLASS

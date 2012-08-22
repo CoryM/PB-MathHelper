@@ -14,7 +14,8 @@ o Other
  + New METHOD BBP(MaxK) 											: Return the Bailey–Borwein–Plouffe formula for Pi
  + New METHOD Sum(In[], ArraySize)									: Returns the sum of an array.
  + New METHOD Average(In[], ArraySize)								: Returns the average of an array.
- + New METHOD SquareSum(In[], ArraySize)							: Returns the Sum of the Square values in an array.
+ + New METHOD SquareSum(In[], ArraySize)							: Returns the Sum of the Square values of an array.
+ + New METHOD PopulationStandardDeviation(In[], ArraySize)			: Returns the Returns the Population Standard Deviation of an array.
  o Changed the Test reporting from a message box to the file "MathHelper Test Results.txt"
  o Changed IUNKNOWN to IAUTOMATION to work around the issues with passing EXTENDED persion values
 	o Changed all DOUBLES back to EXTENDED persion

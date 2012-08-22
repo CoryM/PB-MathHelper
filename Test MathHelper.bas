@@ -356,6 +356,18 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.SquareSum(VARPTR(DataIn(0)), 7)
     TestString += "  Testing SquareSum : " + TestExtended(e, 232, 17)
 
+    'Test the Population Standard Deviation values in an array
+    DataIn(0) = 2
+    DataIn(1) = 4
+    DataIn(2) = 4
+    DataIn(3) = 4
+    DataIn(4) = 5
+    DataIn(5) = 5
+    DataIn(6) = 7
+    DataIn(7) = 9
+    e = MathHelper.PopulationStandardDeviation(VARPTR(DataIn(0)), 7)
+    TestString += "  Testing PopulationStandardDeviation : " + TestExtended(e, 2, 17)
+
   END IF
 
   'Show the results
