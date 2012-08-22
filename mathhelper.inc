@@ -552,5 +552,18 @@ CLASS cMathHelper
     END METHOD
 
 
+    'Return the sum value of an array
+    METHOD Sum(BYVAL IN pIn1 AS EXTENDED POINTER, BYVAL IN ArraySize AS LONG) AS EXTENDED
+      LOCAL result AS EXTENDED
+      LOCAL i AS LONG
+
+      FOR i = 0 TO ArraySize
+        result += @pIn1[i]
+      NEXT i
+
+      METHOD = result
+    END METHOD
+
+
   END INTERFACE
 END CLASS

@@ -319,6 +319,18 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.BBP(11)
     TestString += "  Testing Pi2 : " + TestExtended(e, 3.14159265358979323846264, 17)
 
+    'Sum an array
+    DataIn(0) = 2
+    DataIn(1) = 4
+    DataIn(2) = 4
+    DataIn(3) = 4
+    DataIn(4) = 5
+    DataIn(5) = 5
+    DataIn(6) = 7
+    DataIn(7) = 9
+    e = MathHelper.Sum(VARPTR(DataIn(0)), 7)
+    TestString += "  Testing Sum : " + TestExtended(e, 40, 17)
+
   END IF
 
   'Show the results

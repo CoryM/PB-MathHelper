@@ -12,8 +12,9 @@ o Other
  + New METHOD Rank(In[], Out[], ArraySize)							: Ranking method as defined by Spearman's Rank Correlation Coefficient
  + New METHOD SpearmansRho(X[], Y[], ArraySize)						: Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
  + New METHOD BBP(MaxK) 											: Return the Bailey–Borwein–Plouffe formula for Pi
+ + New METHOD Sum(In[], ArraySize)									: Returns the sum of an array.
  o Changed IUNKNOWN to IAUTOMATION to work around the issues with passing EXTENDED persion values
-	o Changed all DOUBLES to EXTENDED persion
+	o Changed all DOUBLES back to EXTENDED persion
 	o ComplexToPolar .. Rounding of test changed from 14 to 15
     o CompelexPower .. Rounding of test changed from 13 to 16
     o ArcCos .. Rounding of test changed from 15 to 16
