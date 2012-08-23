@@ -8,18 +8,19 @@ o Other
 
 0.00.04
 =======
- + New METHOD PearsonCorrelationCoefficient(X[], Y[], ArraySize)	: Returns the Pearson's Correlation Coefficient of data array pairs in X and Y
- + New METHOD Rank(In[], Out[], ArraySize)							: Ranking method as defined by Spearman's Rank Correlation Coefficient
- + New METHOD SpearmansRho(X[], Y[], ArraySize)						: Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
- + New METHOD BBP(MaxK) 											: Return the Bailey–Borwein–Plouffe formula for Pi
- + New METHOD Sum(In[], ArraySize)									: Returns the sum of an array.
- + New METHOD Average(In[], ArraySize)								: Returns the average of an array.
- + New METHOD SquareSum(In[], ArraySize)							: Returns the Sum of the Square values of an array.
- + New METHOD PopulationStandardDeviation(In[], ArraySize)			: Returns the Returns the Population Standard Deviation of an array.
+ + New METHOD PearsonCorrelationCoefficient(X[], Y[], ArraySize)    : Returns the Pearson's Correlation Coefficient of data array pairs in X and Y
+ + New METHOD Rank(In[], Out[], ArraySize)                          : Ranking method as defined by Spearman's Rank Correlation Coefficient
+ + New METHOD SpearmansRho(X[], Y[], ArraySize)                     : Returns the Spearman's Rho ("Spearmans's Ran Correlation Coefficient")
+ + New METHOD BBP(MaxK)                                             : Return the Bailey–Borwein–Plouffe formula for Pi
+ + New METHOD Sum(In[], ArraySize)                                  : Returns the sum of an array.
+ + New METHOD Average(In[], ArraySize)                              : Returns the average of an array.
+ + New METHOD SquareSum(In[], ArraySize)                            : Returns the Sum of the Square values of an array.
+ + New METHOD PopulationStandardDeviation(In[], ArraySize)          : Returns the Returns the Population Standard Deviation of an array.
+ + New METHOD SampleStandardDeviation(In[], ArraySize)              : Returns the Returns the Sample Standard Deviation of an array.
  o Changed the Test reporting from a message box to the file "MathHelper Test Results.txt"
  o Changed IUNKNOWN to IAUTOMATION to work around the issues with passing EXTENDED persion values
-	o Changed all DOUBLES back to EXTENDED persion
-	o ComplexToPolar .. Rounding of test changed from 14 to 15
+    o Changed all DOUBLES back to EXTENDED persion
+    o ComplexToPolar .. Rounding of test changed from 14 to 15
     o CompelexPower .. Rounding of test changed from 13 to 16
     o ArcCos .. Rounding of test changed from 15 to 16
     o DCT .. Rounding of test changed from 14 to 16
@@ -29,7 +30,7 @@ o Other
 
 0.00.03
 =======
- + New PROPERTY e	: Returns the constant e (2.71828....)
+ + New PROPERTY e    : Returns the constant e (2.71828....)
  b Correct the function and test of method CosH
  o Changed Pi and Tau from a METHOD to a "PROPERTY GET"
  - Changed from EXTENDED to DOUBLE percision float types for external interface.  

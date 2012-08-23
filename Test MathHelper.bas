@@ -368,6 +368,19 @@ FUNCTION PBMAIN () AS LONG
     e = MathHelper.PopulationStandardDeviation(VARPTR(DataIn(0)), 7)
     TestString += "  Testing PopulationStandardDeviation : " + TestExtended(e, 2, 17)
 
+    'Test the Sample Standard Deviation values in an array
+    DataIn(0) = 2
+    DataIn(1) = 4
+    DataIn(2) = 4
+    DataIn(3) = 4
+    DataIn(4) = 5
+    DataIn(5) = 5
+    DataIn(6) = 7
+    DataIn(7) = 9
+    e = MathHelper.SampleStandardDeviation(VARPTR(DataIn(0)), 7)
+    TestString += "  Testing SampleStandardDeviation : " + TestExtended(e, 2.13808993529939507, 16)
+
+
   END IF
 
   'Show the results
